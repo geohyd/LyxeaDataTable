@@ -1,9 +1,9 @@
 import DataTable from "datatables.net";
 
 class LyxeaDatatable {
-  datable;
+  datatable;
   constructor(HTMLDivId: string) {
-    this.datable = new DataTable(`${HTMLDivId}`);
+    this.datatable = new DataTable(`${HTMLDivId}`);
   }
 }
 
