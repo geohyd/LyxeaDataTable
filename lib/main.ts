@@ -1,9 +1,3 @@
-import { sum2 } from "../src/index";
+import LyxeaDatatable from "./class/LyxeaDatatable";
 
-function sum(b: number) {
-  const res = sum2(2, 3);
-
-  return res + b;
-}
-
-export default sum;
+export default LyxeaDatatable;
