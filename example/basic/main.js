@@ -1,3 +1,3 @@
-import sum from "lx_dt"
+import LyxeaDatatable from "lx_dt";
 
-console.log(sum(3))
+const table = new LyxeaDatatable("myTable");
