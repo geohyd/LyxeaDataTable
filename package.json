@@ -1,0 +1,30 @@
+{
+  "name": "lx_dt_v2",
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/lx_dt.umd.cjs",
+  "module": "./dist/lx_dt.js",
+  "exports": {
+    ".": {
+      "import": ["./dist/lx_dt.js", "./dist/lib/main.d.ts"]
+    }
+  },
+  "types": "./dist/lib/main.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.6.3",
+    "jest": "^29.7.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.5.3"
+  }
+}

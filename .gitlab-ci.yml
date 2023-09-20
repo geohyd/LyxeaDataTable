@@ -1,0 +1,17 @@
+stages:
+  - build
+  - tests
+
+job_test:
+  stage: tests
+  image: node
+  script:
+    - npm install
+    - npm run test
+
+job_build:
+stage: build
+  image: node
+  script:
+    - npm install
+    - npm run build
