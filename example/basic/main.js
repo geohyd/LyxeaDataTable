@@ -1,3 +1,3 @@
-import {sum} from "lx_dt"
+import sum from "lx_dt"
 
-console.log("hello")
+console.log(sum(3))
