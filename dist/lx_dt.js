@@ -243,17 +243,17 @@ var u = Ia,
             ["bScrollCollapse", "bCollapse"],
           ]),
           Z(p.oLanguage, o, "fnInfoCallback"),
-          M(p, "aoDrawCallback", o.fnDrawCallback, "user"),
-          M(p, "aoServerParams", o.fnServerParams, "user"),
-          M(p, "aoStateSaveParams", o.fnStateSaveParams, "user"),
-          M(p, "aoStateLoadParams", o.fnStateLoadParams, "user"),
-          M(p, "aoStateLoaded", o.fnStateLoaded, "user"),
-          M(p, "aoRowCallback", o.fnRowCallback, "user"),
-          M(p, "aoRowCreatedCallback", o.fnCreatedRow, "user"),
-          M(p, "aoHeaderCallback", o.fnHeaderCallback, "user"),
-          M(p, "aoFooterCallback", o.fnFooterCallback, "user"),
-          M(p, "aoInitComplete", o.fnInitComplete, "user"),
-          M(p, "aoPreDrawCallback", o.fnPreDrawCallback, "user"),
+          E(p, "aoDrawCallback", o.fnDrawCallback, "user"),
+          E(p, "aoServerParams", o.fnServerParams, "user"),
+          E(p, "aoStateSaveParams", o.fnStateSaveParams, "user"),
+          E(p, "aoStateLoadParams", o.fnStateLoadParams, "user"),
+          E(p, "aoStateLoaded", o.fnStateLoaded, "user"),
+          E(p, "aoRowCallback", o.fnRowCallback, "user"),
+          E(p, "aoRowCreatedCallback", o.fnCreatedRow, "user"),
+          E(p, "aoHeaderCallback", o.fnHeaderCallback, "user"),
+          E(p, "aoFooterCallback", o.fnFooterCallback, "user"),
+          E(p, "aoInitComplete", o.fnInitComplete, "user"),
+          E(p, "aoPreDrawCallback", o.fnPreDrawCallback, "user"),
           (p.rowIdFn = he(o.rowId)),
           qr(p);
         var T = p.oClasses;
@@ -317,7 +317,7 @@ var u = Ia,
           }),
           q.length)
         ) {
-          var E = function (I, N) {
+          var M = function (I, N) {
             return I.getAttribute("data-" + N) !== null ? N : null;
           };
           u(q[0])
@@ -325,8 +325,8 @@ var u = Ia,
             .each(function (I, N) {
               var G = p.aoColumns[I];
               if ((G || Y(p, 0, "Incorrect column count", 18), G.mData === I)) {
-                var $ = E(N, "sort") || E(N, "order"),
-                  B = E(N, "filter") || E(N, "search");
+                var $ = M(N, "sort") || M(N, "order"),
+                  B = M(N, "filter") || M(N, "search");
                 ($ !== null || B !== null) &&
                   ((G.mData = {
                     _: I + ".display",
@@ -348,7 +348,7 @@ var u = Ia,
             }
             ke(p),
               ee.bSort &&
-                M(p, "aoDrawCallback", function () {
+                E(p, "aoDrawCallback", function () {
                   if (p.bSorted) {
                     var re = pe(p),
                       ae = {};
@@ -359,7 +359,7 @@ var u = Ia,
                       pa(p);
                   }
                 }),
-              M(
+              E(
                 p,
                 "aoDrawCallback",
                 function () {
@@ -395,7 +395,7 @@ var u = Ia,
               (p.bInitialised = !0),
               d === !1 && De(p);
           };
-        M(p, "aoDrawCallback", Le, "state_save"),
+        E(p, "aoDrawCallback", Le, "state_save"),
           o.bStateSave ? ((ee.bStateSave = !0), _a(p, o, fe)) : fe();
       }),
       (a = null),
@@ -408,7 +408,7 @@ var u = Ia,
   A,
   er = {},
   Rr = /[\r\n\u2028]/g,
-  Ee = /<.*?>/g,
+  Me = /<.*?>/g,
   Fa =
     /^\d{2,4}[\.\/\-]\d{1,2}[\.\/\-]\d{1,2}([T ]{1}\d{1,2}[:\.]\d{2}([\.:]\d{2})?)?$/,
   La = new RegExp(
@@ -495,7 +495,7 @@ var u = Ia,
     return r;
   },
   Pa = function (e) {
-    return e.replace(Ee, "").replace(/<script/i, "");
+    return e.replace(Me, "").replace(/<script/i, "");
   },
   Ha = function (e) {
     if (e.length < 2) return !0;
@@ -1304,7 +1304,7 @@ function ye(e, r, a) {
   }
 }
 function ie(e, r) {
-  Ma(e);
+  Ea(e);
   var a = x(e, "aoPreDrawCallback", "preDraw", [e]);
   if (u.inArray(!1, a) !== -1) {
     U(e, !1);
@@ -1484,7 +1484,7 @@ function Ge(e, r, a) {
       a[l][i].unique && (!n[i] || !e.bSortCellsTop) && (n[i] = a[l][i].cell);
   return n;
 }
-function Ma(e) {
+function Ea(e) {
   var r = j(e) == "ssp",
     a = e.iInitDisplayStart;
   a !== void 0 &&
@@ -1803,7 +1803,7 @@ function br(e, r, a, n) {
 }
 var _r = _.util.escapeRegex,
   je = u("<div>")[0],
-  Ea = je.textContent !== void 0;
+  Ma = je.textContent !== void 0;
 function na(e) {
   var r = e.aoColumns,
     a,
@@ -1826,7 +1826,7 @@ function na(e) {
             : (f = ""),
           f.indexOf &&
             f.indexOf("&") !== -1 &&
-            ((je.innerHTML = f), (f = Ea ? je.textContent : je.innerText)),
+            ((je.innerHTML = f), (f = Ma ? je.textContent : je.innerText)),
           f.replace && (f = f.replace(/[\r\n\u2028]/g, "")),
           o.push(f);
       (s._aFilterData = o), (s._sFilterRow = o.join("  ")), (c = !0);
@@ -1841,7 +1841,7 @@ function jr(e) {
     caseInsensitive: e.bCaseInsensitive,
   };
 }
-function Mr(e) {
+function Er(e) {
   return {
     sSearch: e.search,
     bSmart: e.smart,
@@ -2175,7 +2175,7 @@ function ze(e) {
   var k,
     J,
     z,
-    E,
+    M,
     ee,
     fe,
     I = [],
@@ -2202,7 +2202,7 @@ function ze(e) {
     L &&
       ((fe = L.clone().prependTo(p)),
       (J = L.find("tr")),
-      (E = fe.find("tr")),
+      (M = fe.find("tr")),
       fe.find("[id]").removeAttr("id")),
     (ee = y.clone().prependTo(p)),
     (k = y.find("tr")),
@@ -2216,7 +2216,7 @@ function ze(e) {
     L &&
       K(function (g) {
         g.style.width = "";
-      }, E),
+      }, M),
     (ae = p.outerWidth()),
     a === ""
       ? ((S.width = "100%"),
@@ -2238,14 +2238,14 @@ function ze(e) {
     }, k),
     u(z).css("height", 0),
     L &&
-      (K(Qe, E),
+      (K(Qe, M),
       K(function (g) {
         $.push(g.innerHTML), N.push(F(u(g).css("width")));
-      }, E),
+      }, M),
       K(function (g, P) {
         g.style.width = N[P];
       }, J),
-      u(E).height(0)),
+      u(M).height(0)),
     K(function (g, P) {
       (g.innerHTML = '<div class="dataTables_sizing">' + G[P] + "</div>"),
         (g.childNodes[0].style.height = "0"),
@@ -2258,7 +2258,7 @@ function ze(e) {
           (g.childNodes[0].style.height = "0"),
           (g.childNodes[0].style.overflow = "hidden"),
           (g.style.width = N[P]);
-      }, E),
+      }, M),
     Math.round(p.outerWidth()) < Math.round(ae)
       ? ((re =
           d.scrollHeight > d.offsetHeight || h.css("overflow-y") == "scroll"
@@ -2393,7 +2393,7 @@ function Dr(e) {
     (r.style.width = F(q)), X.remove();
   }
   if ((c && (r.style.width = F(c)), (c || t) && !e._reszEvt)) {
-    var E = function () {
+    var M = function () {
       u(window).on(
         "resize.DT-" + e.sInstance,
         yr(function () {
@@ -2401,7 +2401,7 @@ function Dr(e) {
         })
       );
     };
-    y ? setTimeout(E, 1e3) : E(), (e._reszEvt = !0);
+    y ? setTimeout(M, 1e3) : M(), (e._reszEvt = !0);
   }
 }
 var yr = _.util.throttle;
@@ -2724,14 +2724,14 @@ function fr(e, r, a) {
       u.each(r.order, function (c, d) {
         e.aaSorting.push(d[0] >= t.length ? [0, d[1]] : d);
       })),
-    r.search !== void 0 && u.extend(e.oPreviousSearch, Mr(r.search)),
+    r.search !== void 0 && u.extend(e.oPreviousSearch, Er(r.search)),
     r.columns)
   ) {
     for (n = 0, l = r.columns.length; n < l; n++) {
       var s = r.columns[n];
       s.visible !== void 0 &&
         (i ? i.column(n).visible(s.visible, !1) : (t[n].bVisible = s.visible)),
-        s.search !== void 0 && u.extend(e.aoPreSearchCols[n], Mr(s.search));
+        s.search !== void 0 && u.extend(e.aoPreSearchCols[n], Er(s.search));
     }
     i && i.columns.adjust();
   }
@@ -2796,7 +2796,7 @@ function Sr(e, r, a) {
       return !1;
     });
 }
-function M(e, r, a, n) {
+function E(e, r, a, n) {
   a &&
     e[r].push({
       fn: a,
@@ -8941,7 +8941,7 @@ u.extend(_.ext.type.search, {
     return Q(e)
       ? e
       : typeof e == "string"
-      ? e.replace(Rr, " ").replace(Ee, "")
+      ? e.replace(Rr, " ").replace(Me, "")
       : "";
   },
   string: function (e) {
@@ -8970,11 +8970,11 @@ function sr(e) {
       },
       // HTML numeric
       "html-num": function (r) {
-        return He(r, e, Ee);
+        return He(r, e, Me);
       },
       // HTML numeric, formatted
       "html-num-fmt": function (r) {
-        return He(r, e, Ee, ar);
+        return He(r, e, Me, ar);
       },
     },
     function (r, a) {
@@ -9076,7 +9076,7 @@ u.extend(!0, _.ext.renderer, {
     },
   },
 });
-var Me = function (e) {
+var Ee = function (e) {
   return (
     Array.isArray(e) && (e = e.join(",")),
     typeof e == "string"
@@ -9088,7 +9088,7 @@ var Me = function (e) {
       : e
   );
 };
-function Er(e, r, a, n, l) {
+function Mr(e, r, a, n, l) {
   return window.moment ? e[r](l) : window.luxon ? e[a](l) : n ? e[n](l) : e;
 }
 var Or = !1;
@@ -9170,9 +9170,9 @@ function rr(e) {
         if (o === "sort") return s;
         var c =
           a === null
-            ? Er(s, "toDate", "toJSDate", "")[e]()
-            : Er(s, "format", "toFormat", "toISOString", a);
-        return o === "display" ? Me(c) : c;
+            ? Mr(s, "toDate", "toJSDate", "")[e]()
+            : Mr(s, "format", "toFormat", "toISOString", a);
+        return o === "display" ? Ee(c) : c;
       }
     );
   };
@@ -9220,7 +9220,7 @@ _.render = {
             return t;
           var i = t < 0 ? "-" : "",
             o = parseFloat(t);
-          if (isNaN(o)) return Me(t);
+          if (isNaN(o)) return Ee(t);
           (o = o.toFixed(a)), (t = Math.abs(o));
           var f = parseInt(t, 10),
             s = a ? r + (t - f).toFixed(a).substring(2) : "";
@@ -9238,8 +9238,8 @@ _.render = {
   },
   text: function () {
     return {
-      display: Me,
-      filter: Me,
+      display: Ee,
+      filter: Ee,
     };
   },
 };
@@ -9335,7 +9335,7 @@ u.extend(_.ext.internal, {
   _fnLog: Y,
   _fnMap: Z,
   _fnBindAction: Sr,
-  _fnCallbackReg: M,
+  _fnCallbackReg: E,
   _fnCallbackFire: x,
   _fnLengthOverflow: wr,
   _fnRenderer: Tr,
@@ -9357,11 +9357,23 @@ u.fn.DataTable = function (e) {
 u.each(_, function (e, r) {
   u.fn.DataTable[e] = r;
 });
-class Ya {
-  datatable;
+class $a {
   config;
-  constructor(r) {
-    (this.config = r), (this.datatable = new _(`${this.config}`));
+  constructor() {
+    this.config = null;
+  }
+  validateConfiguration(r) {
+    if (!r.dataSource) throw new Error("Error: you must provide a dataSource");
+    return this;
   }
 }
-export { Ya as default };
+class za extends $a {
+  datatable;
+  constructor(r) {
+    super(),
+      this.validateConfiguration(r),
+      (this.config = r),
+      (this.datatable = new _(`${this.config}`));
+  }
+}
+export { za as default };

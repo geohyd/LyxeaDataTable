@@ -1,9 +1,10 @@
 export type LyxeaDataTableConfigObject = {
   global: IGlobalConfig;
   dataSource: DatasourceConfig;
-  dataTransformer: LyxeaDatatableTransformer | LyxeaDatatableCustomTransformer;
   header: LyxeaDatatableConfigHeaders;
-  actions: LyxeaDatatableActions | LyxeaDatatableCustomActions;
+  dataTransformer?: LyxeaDatatableTransformer | LyxeaDatatableCustomTransformer;
+  actions?: LyxeaDatatableActions | LyxeaDatatableCustomActions;
+  exporter?: LyxeaDatatableExporter;
 };
 
 interface IGlobalConfig {
