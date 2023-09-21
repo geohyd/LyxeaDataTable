@@ -9373,7 +9373,7 @@ class za extends $a {
     super(),
       this.validateConfiguration(r),
       (this.config = r),
-      (this.datatable = new _(`${this.config}`));
+      (this.datatable = new _(`${this.config.HTMLDivId}`));
   }
 }
 export { za as default };

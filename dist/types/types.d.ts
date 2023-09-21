@@ -1,4 +1,5 @@
 export type LyxeaDataTableConfigObject = {
+  HTMLDivId: string;
   global: IGlobalConfig;
   dataSource: DatasourceConfig;
   header: LyxeaDatatableConfigHeaders;

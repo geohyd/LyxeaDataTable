@@ -5,17 +5,16 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/lx_dt.umd.cjs",
+  "main": "./dist/lx_dt.js",
   "module": "./dist/lx_dt.js",
   "exports": {
     ".": {
       "import": [
-        "./dist/lx_dt.js",
-        "./dist/lib/main.d.ts"
+        "./dist/lx_dt.js"
       ]
     }
   },
-  "types": "./dist/lib/main.d.ts",
+  "types": "./dist/main.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

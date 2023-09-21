@@ -1,10 +1,11 @@
 export type LyxeaDataTableConfigObject = {
+  HTMLDivId: string;
   global: IGlobalConfig;
   dataSource: DatasourceConfig;
   header: LyxeaDatatableConfigHeaders;
   dataTransformer?: LyxeaDatatableTransformer | LyxeaDatatableCustomTransformer;
-  actions?: LyxeaDatatableActions | LyxeaDatatableCustomActions;
-  exporter?: LyxeaDatatableExporter;
+  action?: LyxeaDatatableActions | LyxeaDatatableCustomActions;
+  customExporter?: LyxeaDatatableExporter;
 };
 
 interface IGlobalConfig {

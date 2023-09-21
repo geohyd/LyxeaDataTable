@@ -15,6 +15,7 @@ const config = {
     header: {
         'Name' : {
             'name' : 'key',
+            editable : false,
             visible: true,
             render: '...',
             columnsSearchFormat: "text"
@@ -28,12 +29,36 @@ const config = {
         'action' : {
 
         }
-    }
-    action: {
-        surveaedit: true,
-        surveadelete: true
-    }
+    },
 
+    edit: {
+        active : true,
+        mode: 'POPUP_LINE'
+        EDIT_URL: 'https://sdfdsf",
+        custom: () => {
+
+        }
+    },
+    remove: {
+        active: true,
+        mode:'
+    },
+    customAction: [
+        moveUp : {
+            ui:
+            tooltip:
+            action: (currentRow) => {
+                console.log("Move up baby, :" , currentRow) // {id: 3, x: 35, y:56, label: "baby"}
+            }
+        },
+        moveDown : {
+            ui:
+            tooltip:
+            action: (currentRow) => {
+                console.log("Move down baby, :" , currentRow) // {id: 3, x: 35, y:56, label: "baby"}
+            }
+        }
+    ],
 
     globalconfig : {
         select: {
@@ -65,3 +90,14 @@ const config = {
 }
 
 ```
+
+var config = fromPHP
+config.edit.custom = () => {
+
+}
+
+var lx_t = ....
+
+lx_t.on('edit:end, (initialValues, newValues) => {
+
+})

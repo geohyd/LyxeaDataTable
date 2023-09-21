@@ -9,7 +9,7 @@ class LyxeaDatatable extends AbstractLyxeaDatatable implements ILyxeaDatatable {
     super();
     this.validateConfiguration(config);
     this.config = config;
-    this.datatable = new DataTable(`${this.config}`);
+    this.datatable = new DataTable(`${this.config.HTMLDivId}`);
   }
 }
 
