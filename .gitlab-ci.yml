@@ -8,6 +8,7 @@ job_test:
   script:
     - npm install
     - npm run test
+    - npx prettier --check .
 
 job_build:
 stage: build

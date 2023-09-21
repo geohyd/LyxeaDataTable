@@ -9359,11 +9359,9 @@ u.each(_, function (e, r) {
 });
 class Ya {
   datatable;
+  config;
   constructor(r) {
-    this.datatable = new _(`${r}`);
-  }
-  initCustomTable(r) {
-    return console.log(r), this;
+    (this.config = r), (this.datatable = new _(`${this.config}`));
   }
 }
 export { Ya as default };

@@ -1,9 +1,15 @@
 import DataTable from "datatables.net";
+import { LyxeaDataTableConfigObject } from "../types/types";
+import { ILyxeaDatatable } from "../types/LxDt_interface";
+import AbstractLyxeaDatatable from "./AbstractLyxeaDatatable";
 
-class LyxeaDatatable {
+class LyxeaDatatable extends AbstractLyxeaDatatable implements ILyxeaDatatable {
   datatable;
-  constructor(HTMLDivId: string) {
-    this.datatable = new DataTable(`${HTMLDivId}`);
+  constructor(config: LyxeaDataTableConfigObject) {
+    super();
+    this.validateConfiguration(config);
+    this.config = config;
+    this.datatable = new DataTable(`${this.config}`);
   }
 }
 

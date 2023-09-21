@@ -1,4 +1,4 @@
-```js
+```ts
 
 const config = {
     dom:...,

@@ -1,8 +1,8 @@
 import { LyxeaDataTableConfigObject } from "../types/types";
-import { ILyxeaDatatable } from "../types/lx_interface";
+import { ILyxeaDatatable } from "../types/LxDt_interface";
 declare class LyxeaDatatable implements ILyxeaDatatable {
   datatable: import("datatables.net").Api<any>;
-  constructor(HTMLDivId: string);
-  initCustomTable(config: LyxeaDataTableConfigObject): this;
+  config: LyxeaDataTableConfigObject;
+  constructor(config: LyxeaDataTableConfigObject);
 }
 export default LyxeaDatatable;
