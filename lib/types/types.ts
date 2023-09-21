@@ -1,3 +1,19 @@
+/**
+ *
+ * TODO Define the lib model here
+ *
+ * */
+
+/**
+ * example:
+ *
+ * const cats = <const>["crocus", "felix"];
+ * type CatNames = typeof cats[number];
+ * type CatInfo = Record<CatNames, { taille: number }>
+ *
+ */
+
+/** Expected configuration object */
 export type LyxeaDataTableConfigObject = {
   HTMLDivId: string;
   global: IGlobalConfig;
@@ -29,9 +45,3 @@ interface LyxeaDatatableExporter {
     active: boolean;
   };
 }
-
-/* const cats = <const>["crocus", "felix"];
-type CatNames = typeof cats[number];
-type CatInfo = Record<CatNames, {
-    taille: number
-}>; */

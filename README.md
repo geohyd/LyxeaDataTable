@@ -21,4 +21,10 @@ Automation the datatable content and visualisation from a custom configuration o
 
 ## Doc
 
-### Features
+### Configuration générale
+
+### Header
+
+### Transformer
+
+### Action

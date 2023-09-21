@@ -6,12 +6,12 @@ const config = {
         {
             //Static collection
         }
-    ]
+    ],
     datasource : "https://....",
-    dataTransofmrer : funciton(data) => {
+    dataTransofmrer : (data) => {
         filter...config.
-    }
-    dataTransofmrer: "REMOVE_COMMENT"
+    },
+    dataTransofmrer: "REMOVE_COMMENT",
     header: {
         'Name' : {
             'name' : 'key',
@@ -32,38 +32,38 @@ const config = {
     },
 
     edit: {
-        active : true,
-        mode: 'POPUP_LINE'
-        EDIT_URL: 'https://sdfdsf",
+        active : true,,
+        mode: 'POPUP_LINE',
+        EDIT_URL: "https://sdfdsf",
         custom: () => {
 
-        }
+        },
     },
     remove: {
         active: true,
-        mode:'
+        mode:'REMOVE',
     },
     customAction: [
         moveUp : {
             ui:
             tooltip:
-            action: (currentRow) => {
+            action: (currentRow: T): void => {
                 console.log("Move up baby, :" , currentRow) // {id: 3, x: 35, y:56, label: "baby"}
             }
         },
         moveDown : {
-            ui:
-            tooltip:
-            action: (currentRow) => {
+            button: "edit",
+            tooltip: "modifier",
+            action: (currentRow: T): void => {
                 console.log("Move down baby, :" , currentRow) // {id: 3, x: 35, y:56, label: "baby"}
-            }
+            },
         }
     ],
 
     globalconfig : {
         select: {
             active: true,
-            multiple: true
+            multiple: true,
         },
         fullSearch : true,
         columnSearch: true,
@@ -89,8 +89,6 @@ const config = {
 
 }
 
-```
-
 var config = fromPHP
 config.edit.custom = () => {
 
@@ -98,6 +96,8 @@ config.edit.custom = () => {
 
 var lx_t = ....
 
-lx_t.on('edit:end, (initialValues, newValues) => {
+lx_t.on('edit:end', <E, T>(initialValues: E, newValues: T): void | T => {
 
 })
+
+```
