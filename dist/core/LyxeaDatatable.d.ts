@@ -9,8 +9,10 @@ import { ActionArgs } from '../plugins/action/Action';
  * @types
  */
 export interface CustomConfigColumns extends ConfigColumns {
+    renderer?: CustomRenderer;
     style?: Record<string, Partial<CSSStyleDeclaration>>;
 }
+export type CustomRenderer = string | Function | Array<string> | Array<Function> | Array<string | Function>;
 export interface CustomDatatableConfig<T> extends Config {
     lxConfig?: LxConfigObject;
     data?: Array<T>;
