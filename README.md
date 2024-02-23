@@ -4,11 +4,7 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/github/v/release/hhertout/laravel_submodules_gen.svg" />
-    <a href="https://github.com/hhertout/rac_tool/actions">
-      <img alt="Tests Passing" src="https://github.com/hhertout/laravel_submodules_gen/actions/workflows/tests.yml/badge.svg" />
-    </a>
-<a href='https://coveralls.io/github/hhertout/laravel_submodules_gen'><img src='https://coveralls.io/repos/github/hhertout/laravel_submodules_gen/badge.svg' alt='Coverage Status' /></a>
+    <a href='https://coveralls.io/github/geohyd/LyxeaDataTable'><img src='https://coveralls.io/repos/github/geohyd/LyxeaDataTable/badge.svg' alt='Coverage Status' /></a>
 </p>
 
 ### Caution ! This lib use node > 18
