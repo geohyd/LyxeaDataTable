@@ -23,7 +23,7 @@
       // @ts-ignore
       var number = +(!split[1]
         ? split[0]
-        : split.join('.') + ((split[1].length > fractionDigits && '1') || ''));
+        : split.join('.') + ((split[1].length > fractionDigits! && '1') || ''));
       return toFixed.call(number, fractionDigits);
     };
   })(Number.prototype);
