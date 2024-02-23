@@ -63,7 +63,7 @@ You can provide Datatable native configuration in the main object. It works prop
 
 If you want more info about the base configuration, please refer to the official documentation.
 
-If you want to add the specific Lyxea custom object, you need to add the key `lxConfig`.
+If you want to add the specific Lyxea custom object, you need to add the key `lxConfig`. Then you can add your own custom configuration depend on your needs.
 
 The following sections are dedicated to this configuration.
 

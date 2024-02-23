@@ -1,6 +1,5 @@
 import LyxeaDatatable from 'lx_dt';
 import { dataTableData } from './data';
-import $ from 'jquery';
 
 window.lx = LyxeaDatatable;
 
@@ -25,7 +24,23 @@ const table = new LyxeaDatatable('#myTable', {
       {
         headerGroup: 'Mon super groupe',
         columns: [
-          { data: 'last_name', name: 'last_name', title: 'Nom' },
+          {
+            data: 'last_name',
+            name: 'last_name',
+            title: 'Nom',
+          },
+          {
+            data: 'age',
+            name: 'age',
+            title: 'Age',
+            renderer: ['toto', 'NUMBER_FIXED_2'],
+          },
+          {
+            data: 'desc',
+            name: 'desc',
+            title: 'Biblio',
+            renderer: ['CUT_LONG_TEXT', 'UPPERCASE'],
+          },
           { data: 'start_date', name: 'start_date', title: 'Date' },
         ],
       },
@@ -77,7 +92,7 @@ const table3 = new LyxeaDatatable('#myTable3', {
 
   lxConfig: {
     filters: true,
-    handleBootrapTabChange: false,
+    handleBootrapTabChange: true,
     headers: [
       {
         columns: [
