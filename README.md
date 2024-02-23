@@ -32,7 +32,7 @@ nvm use # used to change node version with .nvmrc present in the root directory
 
 ## Intro
 
-Lyxea Web custom typescript library for integrated datatable.
+Lyxea custom typescript library for integrated datatable.
 
 Automation the datatable content and visualisation from a custom configuration object.
 
@@ -59,16 +59,24 @@ Then, go on <a href="http://localhost:5173/">`http://localhost:5173/`</a>
 
 ## Configuration
 
+You can provide Datatable native configuration in the main object. It works properly.
+
+If you want more info about the base configuration, please refer to the official documentation.
+
+If you want to add the specific Lyxea custom object, you need to add the key `lxConfig`.
+
+The following sections are dedicated to this configuration.
+
 ### Lyxea Configuration Object
 
-| Name                   |         Description         | Default |
-| :--------------------- | :-------------------------: | ------: |
-| url                    |       url to get data       |       - |
-| headers                | headers and cols definition |       - |
-| filters                |            False            |    true |
-| handleBootrapTabChange |            False            |    true |
-| row_action             |            False            |       - |
-| columnsDefaultKey      |            False            |       - |
+| Name                   |                                           Description                                            | Default |
+| :--------------------- | :----------------------------------------------------------------------------------------------: | ------: |
+| url                    |                                    url to provide to get data                                    |       - |
+| headers                |                                   headers and cols definition                                    |       - |
+| filters                |                                              False                                               |    true |
+| handleBootrapTabChange |      Handle the issue with bootstrap where the click on tab nav broke the datatable headers      |    true |
+| row_action             |            Provide action you can define and add a column at the end of the DataTable            |       - |
+| columnsDefaultKey      | Provide a default key for each column. Overriden by the key `defaultValue` in columns definition |       - |
 
 ### Global Headers definition
 
@@ -113,6 +121,8 @@ In the future, more keys can be added in this project.
 
 If you want to modify the data exposed in the datatable, you must add a transforer.
 
+In this function, you need to return all the data.
+
 You can add it to implement the dedicated function :
 
 ```js
@@ -123,7 +133,7 @@ const table = new LyxeaDatatable({
 table.tranformer.add((data) =>
   data.map((d) => {
     d.first_name = d.first_name.toUpperCase();
-    return d;
+    return d; // return of the data needed ! function .map did it natively
   })
 );
 ```
@@ -191,6 +201,8 @@ state.getState(); // { count: 0 }
 ```
 
 To subscribe to a state, simply call the function `subscribe` exposed by the state of the object.
+
+It is like an event listener on the state, and the procedure you define in the callback will be call on each change of the state.
 
 ```js
 // in this example, dao object have a state.

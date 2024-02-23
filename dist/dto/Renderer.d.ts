@@ -1,6 +1,7 @@
+import { LxConfigObject } from '../core/LyxeaDatatable';
 export type RendederConfig = {};
 declare class LxRenderer {
-    renderer: Array<RendederConfig>;
-    constructor();
+    renderers: Array<RendederConfig>;
+    constructor(config: LxConfigObject);
 }
 export default LxRenderer;

@@ -1,185 +1,89 @@
+import { LxConfigObject } from '@core/LyxeaDatatable';
+import '../utils/renderer';
 import $ from 'jquery';
 
 export type RendederConfig = {};
 
 class LxRenderer {
-  renderer: Array<RendederConfig>;
-  constructor() {
-    this.renderer = [];
+  renderers: Array<RendederConfig>;
+  constructor(config: LxConfigObject) {
+    this.renderers = [];
+    config.headers &&
+      config.headers.map((headers) => {
+        for (const config of headers.columns) {
+          if (!config.renderer) continue;
+          if (!Array.isArray(config.renderer))
+            config.renderer = Array(config.renderer);
+
+          const multiRender = config.renderer.map((render) => {
+            if (typeof render === 'string') {
+              if (render.startsWith('DATE_TO_FORMAT_')) {
+                config.type = 'date-uk';
+                // @ts-ignore
+                config.render = $.fn.dataTable.render.dateFormat(
+                  render.split('_').pop()
+                );
+              }
+
+              switch (render) {
+                case 'DATE':
+                  config.type = 'date-uk';
+                  config.render =
+                    // @ts-ignore
+                    $.fn.dataTable.render.dateFormat('DD/MM/YYYY HH:mm');
+                  break;
+                case 'DATE_WITH_SECOND':
+                  config.type = 'date-uk';
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.dateFormat(
+                    'DD/MM/YYYY HH:mm:ss'
+                  );
+                  break;
+                case 'LOCAL_NUMBER':
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.localeNumber();
+                  break;
+                case 'BOOLEAN_YESNO':
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.boolToText(
+                    'Oui',
+                    'Non'
+                  );
+                  break;
+                case 'NUMBER_FIXED_2':
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.toFixed(2);
+                  break;
+                case 'NUMBER_2_DIGIT_MAX':
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.parseFloat(2);
+                  break;
+                case 'CUT_LONG_TEXT':
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.ellipsis(30, true);
+                  break;
+                case 'PARSE_INT':
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.parseInt();
+                  break;
+                case 'CHECKBOX':
+                  // @ts-ignore
+                  config.checkboxes = {
+                    selectRow: true,
+                  };
+                  break;
+                case 'EDITABLE':
+                  // @ts-ignore
+                  config.render = $.fn.dataTable.render.editableCol();
+              }
+            }
+          });
+
+          // @ts-ignore
+          $.fn.dataTable.render.multi(multiRender);
+        }
+      });
   }
 }
-//@ts-ignore
-$.fn.dataTable.render.multi = function (renderArray: any) {
-  return function (d: any, type: any, row: any, meta: any) {
-    for (var r = 0; r < renderArray.length; r++) {
-      d = renderArray[r](d, type, row, meta);
-    }
-
-    return d;
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.localeNumber = function (lang = __lang__ || 'fr') {
-  const getLang = function () {
-    if (lang && lang == 'fr') {
-      return 'fr-FR';
-    } else if (lang && lang == 'en') {
-      return 'en-US';
-    }
-    return '';
-  };
-  const getLocaleNumber = function (number: any) {
-    var floatData = parseFloat(number);
-    if (floatData) {
-      return floatData.toLocaleString(getLang());
-    }
-    return number;
-  };
-  //@ts-ignore
-  return function (data: any, type: any, row: any) {
-    //@ts-ignore
-    // Render is apply for all type
-    if (data && Number(data)) {
-      return getLocaleNumber(Number(data));
-    }
-    return data;
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.dateFormat = function (format = 'DD/MM/YYYY HH:mm') {
-  //@ts-ignore
-  return function (data: any, type: any, row: any) {
-    // Render is apply for all type
-    //@ts-ignore
-    if (data && moment && moment(data)) {
-      //@ts-ignore
-      return moment(data).format(format);
-    }
-    return data;
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.boolToText = function (yes = 'Vrai', no = 'Faux') {
-  // I would have preferred to call the arguments `true` and `false`, but this is a reserved word !
-  //@ts-ignore
-  return function (data, type, row) {
-    // Render is apply for all type
-    if (data) {
-      return yes;
-    }
-    return no;
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.toFixed = function (maxdigit = 2) {
-  //@ts-ignore
-  return function (data: any, type: any, row: any) {
-    // Render is apply for all type
-    if (data && Number(data)) {
-      return Number(data).toFixed(maxdigit);
-    }
-    return data;
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.parseFloat = function (maxdigit: any) {
-  //@ts-ignore
-  return function (data: any, type: any, row: any) {
-    // Render is apply for all type
-    if (data && Number(data)) {
-      var val: any = Number(data);
-      if (maxdigit) {
-        // For fix this bug :
-        // https://www.sitepoint.com/number-tofixed-rounding-errors-broken-but-fixable/
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=397880
-        val = val.toFixed(maxdigit);
-      }
-      return parseFloat(val);
-    }
-    return data;
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.parseInt = function () {
-  //@ts-ignore
-  return function (data: any, type: any, row: any) {
-    // Render is apply for all type
-    if (data && Number(data)) {
-      return Math.round(Number(data));
-    }
-    return data;
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.editableCol = function () {
-  //@ts-ignore
-  return function (data: any, type: any, row: any) {
-    //if ( type === 'display' ) {
-    return `<span class="editable-cell">
-                    <span>${data ?? ''}</span> 
-                    <i class="fa fa-pencil"></i>
-                </span>`;
-    // }
-  };
-};
-
-//@ts-ignore
-$.fn.dataTable.render.ellipsis = function (
-  cutoff: any,
-  wordbreak: any,
-  escapeHtml: any
-) {
-  var esc = function (t: any) {
-    return t
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  };
-  //@ts-ignore
-  return function (d: any, type: any, row: any) {
-    // Order, search and type get the original data
-    if (type !== 'display') {
-      return d;
-    }
-
-    if (typeof d !== 'number' && typeof d !== 'string') {
-      return d;
-    }
-
-    d = d.toString(); // cast numbers
-
-    if (d.length < cutoff) {
-      return d;
-    }
-
-    var shortened = d.substr(0, cutoff - 1);
-
-    // Find the last white space character in the string
-    if (wordbreak) {
-      shortened = shortened.replace(/\s([^\s]*)$/, '');
-    }
-
-    // Protect against uncontrolled HTML input
-    if (escapeHtml) {
-      shortened = esc(shortened);
-    }
-
-    return (
-      '<span class="ellipsis" title="' +
-      esc(d) +
-      '">' +
-      shortened +
-      '&#8230;</span>'
-    );
-  };
-};
 
 export default LxRenderer;
