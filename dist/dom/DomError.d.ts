@@ -1,4 +1,4 @@
 declare class DomError extends Error {
-  constructor(message: string);
+    constructor(message: string);
 }
 export default DomError;

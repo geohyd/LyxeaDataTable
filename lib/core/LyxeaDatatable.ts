@@ -5,7 +5,6 @@ import 'datatables.net-buttons-dt';
 import 'datatables.net-buttons/js/buttons.colVis.mjs';
 import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-buttons/js/buttons.print.mjs';
-import '../style/style.css';
 
 import DataTable, { Config, ConfigColumns } from 'datatables.net-dt';
 import AbstractLyxeaDatatable from './AbstractLyxeaDatatable';

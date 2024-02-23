@@ -2,7 +2,7 @@ name: 🧪 Tests
 
 on:
   pull_request:
-    branches: ['main', 'dev']
+    branches: ['main', 'dev', 'master', 'develop']
 
 jobs:
   test:
@@ -20,6 +20,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
       - run: npm ci
-      - run: npm coverage
+      - run: npm run coverage
       - name: Coveralls
         uses: coverallsapp/github-action@v2
