@@ -1,19 +1,10 @@
 import LyxeaDatatable from 'lx_dt';
 import { dataTableData } from './data';
 
-window.lx = LyxeaDatatable;
-
-const table = new LyxeaDatatable('#myTable', {
+const table1 = new LyxeaDatatable('#myTable', {
   data: dataTableData,
-  fixedHeader: true,
-  paging: false,
-  responsive: true,
   lxConfig: {
-    columnsDefaultKey: {
-      defaultContent: '',
-      michel: 'hoho',
-      maSuperConfig: 'Wahoo',
-    },
+    filters: true,
     headers: [
       {
         columns: [
@@ -40,11 +31,11 @@ const table = new LyxeaDatatable('#myTable', {
 /**
  * Transformer
  */
-table.tranformer.add((data) =>
+table1.tranformer.add((data) =>
   data.map((d) => {
     d.first_name = d.first_name.toUpperCase();
     return d;
   })
 );
 
-table.init();
+table1.init();

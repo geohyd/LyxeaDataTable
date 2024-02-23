@@ -5,9 +5,6 @@ window.lx = LyxeaDatatable;
 
 const table = new LyxeaDatatable('#myTable', {
   data: dataTableData,
-  fixedHeader: true,
-  paging: false,
-  responsive: true,
   lxConfig: {
     columnsDefaultKey: {
       defaultContent: '',
