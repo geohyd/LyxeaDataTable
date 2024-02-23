@@ -1,4 +1,4 @@
 declare class ActionError extends Error {
-  constructor(message: string);
+    constructor(message: string);
 }
 export default ActionError;

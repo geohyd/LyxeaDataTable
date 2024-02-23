@@ -11,10 +11,7 @@
  * @param {{ [key: string]: any }} rowData
  * @returns {string}
  */
-declare const parseStringWithData: (
-  url: string,
-  rowData: {
+declare const parseStringWithData: (url: string, rowData: {
     [key: string]: any;
-  }
-) => string;
+}) => string;
 export default parseStringWithData;

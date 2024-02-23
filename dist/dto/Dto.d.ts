@@ -1,8 +1,9 @@
 interface Cols {
-  name: string;
+    name: string;
 }
-interface D extends Cols {}
+interface D extends Cols {
+}
 declare class Dto<T> {
-  getDataFormatted(data: Array<T>, columns: Array<D>): Array<any>;
+    getDataFormatted(data: Array<T>, columns: Array<D>): Array<any>;
 }
 export default Dto;
