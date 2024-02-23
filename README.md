@@ -4,7 +4,17 @@
 </p>
 
 <p align="center">
-    <a href='https://coveralls.io/github/geohyd/LyxeaDataTable'><img src='https://coveralls.io/repos/github/geohyd/LyxeaDataTable/badge.svg' alt='Coverage Status' /></a>
+<a href="https://github.com/geohyd/LyxeaDataTable/actions/workflows/build.yml">
+<img src="https://github.com/geohyd/LyxeaDataTable/actions/workflows/build.yml/badge.svg">
+</a>
+<a href="https://github.com/geohyd/LyxeaDataTable/actions/workflows/test.yml">
+<img src="https://github.com/geohyd/LyxeaDataTable/actions/workflows/test.yml/badge.svg">
+</a>
+<a href="https://github.com/geohyd/LyxeaDataTable/actions/workflows/code_quality.yml">
+<img src="https://github.com/geohyd/LyxeaDataTable/actions/workflows/code_quality.yml/badge.svg">
+</a>
+<a href='https://coveralls.io/github/geohyd/LyxeaDataTable'><img src='https://coveralls.io/repos/github/geohyd/LyxeaDataTable/badge.svg' alt='Coverage Status' /></a>
+
 </p>
 
 ### Caution ! This lib use node > 18
