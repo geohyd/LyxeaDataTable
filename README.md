@@ -146,6 +146,22 @@ If you want to add an action on each row of the datatable, we need to implement 
 
 To do it, simply add the key `actions` on the LyxaDatatable specific config object.
 
+### Renderer
+
+| name               | description                                                                                | example                                   |
+|--------------------|--------------------------------------------------------------------------------------------|-------------------------------------------|
+| DATE_TO_FORMAT_    | parse date to defined format                                                               | {render: 'DATE_TO_FORMAT_YYYY'} => '2024' |
+| DATE               | parse date to predefined date format                                                       | '2024-04-23 12:23'                        |
+| DATE_WITH_SECOND   | parse date to predefined date format                                                       | '2024-04-23 12:23:34'                     |
+| LOCAL_NUMBER       | parse number to string with correct format                                                 | 1300 => '1 300'                           |
+| BOOLEAN_YESNO      | return a string 'Yes' / 'No' depend on the bool value                                      | true => "Yes" or false => "No"            |
+| NUMBER_FIXED_2     | fix the number value to two digit                                                          | 1.3443 => 1.34, 1 => 1.00                 |
+| NUMBER_2_DIGIT_MAX | fix the number value to two digit max                                                      | 1.3443 => 1.34, 1 => 1                    |
+| CUT_LONG_TEXT      | In case of a long text, prevent the overflow by cutting the text and replace it with '...' | "a very long text" => "a very ..."        |
+| PARSE_INT          | parse a string to integer                                                                  | "3" => 3                                  |
+| CHECKBOX           | [plugin] add a checkbox at the first columns of the table                                  |                                           |
+| EDITABLE           | [plugin] set the selected column to be editable                                                          |                                           |
+
 ## Architecture
 
 ### Project structure
