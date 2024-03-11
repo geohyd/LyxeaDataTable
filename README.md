@@ -149,8 +149,8 @@ To do it, simply add the key `actions` on the LyxaDatatable specific config obje
 ### Renderer
 
 | name               | description                                                                                | example                                              |
-|--------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------|
-| DATE_TO_FORMAT_    | parse date to defined format                                                               | {render: 'DATE_TO_FORMAT_YYYY'} => '2024'            |
+| ------------------ | ------------------------------------------------------------------------------------------ | ---------------------------------------------------- | --- | --- |
+| DATE*TO_FORMAT*    | parse date to defined format                                                               | {render: 'DATE_TO_FORMAT_YYYY'} => '2024'            |
 | DATE               | parse date to predefined date format                                                       | '23/04/2024 12:23'                                   |
 | DATE_DAY           | parse date with year, month and day only                                                   | '23/04/2024'                                         |
 | DATE_WITH_SECOND   | parse date to predefined date format                                                       | '23/04/2024 12:23:34'                                |
@@ -161,7 +161,7 @@ To do it, simply add the key `actions` on the LyxaDatatable specific config obje
 | CUT_LONG_TEXT      | In case of a long text, prevent the overflow by cutting the text and replace it with '...' | "a very long text" => "a very ..."                   |
 | PARSE_INT          | parse a string to integer                                                                  | "3" => 3                                             |
 | CHECKBOX           | add a checkbox at the first columns of the table                                           |                                                      |
-| UPPERCASE          | convert a string to uppercase                                                              | "this must be uppercase" => "THIS MUST BE UPPERCASE" |                                                         |                                           |
+| UPPERCASE          | convert a string to uppercase                                                              | "this must be uppercase" => "THIS MUST BE UPPERCASE" |     |     |
 
 ## Architecture
 
