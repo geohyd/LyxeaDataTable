@@ -19,6 +19,7 @@ import Transformers from '@dto/Transformers';
 import Action, { ActionArgs } from '@plugins/action/Action';
 import DtButtons from './DtButtons';
 import Filters from './Filters';
+import LxRenderer from '@dto/Renderer';
 
 //@ts-ignore
 window.JSZip = jszip;
@@ -169,6 +170,7 @@ class LyxeaDatatable<T>
     }
 
     if (lxConfig) {
+      new LxRenderer(lxConfig);
       const headersBuilder = this.#customColumnBuilder
         .setColsDef(lxConfig)
         .generate();
@@ -251,12 +253,6 @@ class LyxeaDatatable<T>
     this.refElement.dispatchEvent(this.initEvent(this.instance));
 
     /**
-     * Handle issue with bootstrap tab nav
-     */
-    if (lxConfig && lxConfig.handleBootrapTabChange)
-      this.handleBootrapTabChange(this.instance);
-
-    /**
      * Adding filter inputs
      */
     if (lxConfig && lxConfig.filters) {
@@ -264,6 +260,12 @@ class LyxeaDatatable<T>
         this.#headerElement
       );
     }
+
+    /**
+     * Handle issue with bootstrap tab nav
+     */
+    if (lxConfig && lxConfig.handleBootrapTabChange)
+      this.handleBootrapTabChange(this.instance);
 
     return this;
   }
