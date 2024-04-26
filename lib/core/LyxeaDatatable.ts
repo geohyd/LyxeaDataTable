@@ -170,6 +170,13 @@ class LyxeaDatatable<T>
     }
 
     if (lxConfig) {
+      /*
+        If columns in the standard object and in lxconfig, header generation is only based on lxconfig.
+        This allows you to generate the header with all the columns (and not just the columns defined in lxconfig).
+      */
+      if (lxConfig.headers && standardColumns) {
+        lxConfig.headers?.unshift({ 'columns': [...standardColumns] });
+      }
       new LxRenderer(lxConfig);
       const headersBuilder = this.#customColumnBuilder
         .setColsDef(lxConfig)
@@ -243,8 +250,6 @@ class LyxeaDatatable<T>
 
     this.#dtButtons.parse(this.config.buttons);
 
-    //@ts-ignore
-    window.lxConfig = this.config;
     /**
      * Initializing datatable
      * Init event, get the datable instance on event.detail
@@ -273,6 +278,13 @@ class LyxeaDatatable<T>
   __filterDataWithKey() {}
 
   handleBootrapTabChange<T>(instance: DataTable<T>) {
+    // For JQUERY user
+    if (typeof $ == 'function') {
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        // @ts-ignore
+        instance.draw();
+      })
+    }
     document.querySelectorAll('button[data-bs-toggle="tab"]').forEach((el) => {
       el.addEventListener('shown.bs.tab', () => {
         // @ts-ignore

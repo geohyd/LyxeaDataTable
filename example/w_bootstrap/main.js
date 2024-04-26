@@ -7,20 +7,18 @@ const table = new LyxeaDatatable('#myTable', {
   data: dataTableData,
   scrollCollapse: true,
   scrollY: 200,
+  columns: [
+    {
+      data: 'first_name',
+      name: 'first_name',
+      title: 'Prénom',
+      className: 'salut',
+      maSuperConfig: 'Ohé toto',
+    },
+  ],
   lxConfig: {
     filters: true,
     headers: [
-      {
-        columns: [
-          {
-            data: 'first_name',
-            name: 'first_name',
-            title: 'Prénom',
-            className: 'salut',
-            maSuperConfig: 'Ohé toto',
-          },
-        ],
-      },
       {
         headerGroup: 'Mon super groupe',
         columns: [
