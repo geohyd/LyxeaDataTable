@@ -175,7 +175,7 @@ class LyxeaDatatable<T>
         This allows you to generate the header with all the columns (and not just the columns defined in lxconfig).
       */
       if (lxConfig.headers && standardColumns) {
-        lxConfig.headers?.unshift({ 'columns': [...standardColumns] });
+        lxConfig.headers?.unshift({ columns: [...standardColumns] });
       }
       new LxRenderer(lxConfig);
       const headersBuilder = this.#customColumnBuilder
@@ -283,7 +283,7 @@ class LyxeaDatatable<T>
       $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
         // @ts-ignore
         instance.draw();
-      })
+      });
     }
     document.querySelectorAll('button[data-bs-toggle="tab"]').forEach((el) => {
       el.addEventListener('shown.bs.tab', () => {
