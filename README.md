@@ -63,7 +63,7 @@ You can provide Datatable native configuration in the main object. It works prop
 
 If you want more info about the base configuration, please refer to the official documentation.
 
-If you want to add the specific Lyxea custom object, you need to add the key `lxConfig`.
+If you want to add the specific Lyxea custom object, you need to add the key `lxConfig`. Then you can add your own custom configuration depend on your needs.
 
 The following sections are dedicated to this configuration.
 
@@ -145,6 +145,23 @@ This transformer will be execute just before datatable initialisation.
 If you want to add an action on each row of the datatable, we need to implement the action module.
 
 To do it, simply add the key `actions` on the LyxaDatatable specific config object.
+
+### Renderer
+
+| name               | description                                                                                | example                                              |
+| ------------------ | ------------------------------------------------------------------------------------------ | ---------------------------------------------------- | --- | --- |
+| DATE*TO_FORMAT*    | parse date to defined format                                                               | {render: 'DATE_TO_FORMAT_YYYY'} => '2024'            |
+| DATE               | parse date to predefined date format                                                       | '23/04/2024 12:23'                                   |
+| DATE_DAY           | parse date with year, month and day only                                                   | '23/04/2024'                                         |
+| DATE_WITH_SECOND   | parse date to predefined date format                                                       | '23/04/2024 12:23:34'                                |
+| LOCAL_NUMBER       | parse number to string with correct format                                                 | 1300 => '1 300'                                      |
+| BOOLEAN_YESNO      | return a string 'Yes' / 'No' depend on the bool value                                      | true => "Yes" or false => "No"                       |
+| NUMBER_FIXED_2     | fix the number value to two digit                                                          | 1.3443 => 1.34, 1 => 1.00                            |
+| NUMBER_2_DIGIT_MAX | fix the number value to two digit max                                                      | 1.3443 => 1.34, 1 => 1                               |
+| CUT_LONG_TEXT      | In case of a long text, prevent the overflow by cutting the text and replace it with '...' | "a very long text" => "a very ..."                   |
+| PARSE_INT          | parse a string to integer                                                                  | "3" => 3                                             |
+| CHECKBOX           | add a checkbox at the first columns of the table                                           |                                                      |
+| UPPERCASE          | convert a string to uppercase                                                              | "this must be uppercase" => "THIS MUST BE UPPERCASE" |     |     |
 
 ## Architecture
 

@@ -52,7 +52,7 @@ export default defineConfig({
         },
       },
     },
-    target: 'esnext',
+    target: 'ES2015',
   },
   plugins: [dts()],
 });
