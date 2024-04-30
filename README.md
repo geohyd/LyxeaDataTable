@@ -75,6 +75,7 @@ The following sections are dedicated to this configuration.
 | headers                |                                   headers and cols definition                                    |       - |
 | filters                |                                              False                                               |    true |
 | handleBootrapTabChange |      Handle the issue with bootstrap where the click on tab nav broke the datatable headers      |    true |
+| scrollYFitToScreen     |                         Set the scrollY to automatically fit the screen                          |   false |
 | row_action             |            Provide action you can define and add a column at the end of the DataTable            |       - |
 | columnsDefaultKey      | Provide a default key for each column. Overriden by the key `defaultValue` in columns definition |       - |
 

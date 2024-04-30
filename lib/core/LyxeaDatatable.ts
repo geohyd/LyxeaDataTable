@@ -49,6 +49,7 @@ export type LxConfigObject = {
   headers?: LxHeadersConfig;
   filters?: boolean;
   handleBootrapTabChange?: boolean;
+  scrollYFitToScreen?: boolean;
   row_action?: {
     width: string;
     className?: string;
@@ -121,6 +122,8 @@ class LyxeaDatatable<T>
       config.lxConfig.filters = config.lxConfig.filters ?? true;
       config.lxConfig.handleBootrapTabChange =
         config.lxConfig.handleBootrapTabChange ?? true;
+      config.lxConfig.scrollYFitToScreen =
+        config.lxConfig.scrollYFitToScreen ?? false;
     }
 
     return config;
@@ -250,6 +253,9 @@ class LyxeaDatatable<T>
 
     this.#dtButtons.parse(this.config.buttons);
 
+    if (lxConfig && lxConfig.scrollYFitToScreen)
+      this.scrollYFitToScreen(this.config);
+
     /**
      * Initializing datatable
      * Init event, get the datable instance on event.detail
@@ -276,6 +282,50 @@ class LyxeaDatatable<T>
   }
 
   __filterDataWithKey() {}
+
+  scrollYFitToScreen<T>(config: CustomDatatableConfig<T>) {
+    const self = this;
+    // @ts-ignore
+    config.drawCallback = function () {
+      const tabPosition = document.querySelector(
+        `${self._ref}_wrapper`
+      ) as HTMLElement;
+      if (tabPosition) {
+        const tabTop = tabPosition.getBoundingClientRect().top;
+        const dtScrollHeadHeight = (
+          document.querySelector(
+            `${self._ref}_wrapper .dt-scroll-head`
+          ) as HTMLElement
+        ).offsetHeight;
+        const dtScrollFootHeight = (
+          document.querySelector(
+            `${self._ref}_wrapper .dt-scroll-foot`
+          ) as HTMLElement
+        ).offsetHeight;
+        const dtLayoutRows = document.querySelectorAll(
+          `${self._ref}_wrapper .dt-layout-row:not(.dt-layout-table)`
+        );
+        const dtLayoutRowsHeight = Array.from(dtLayoutRows).reduce(
+          (acc, node) => acc + (node as HTMLElement).offsetHeight,
+          0
+        );
+        const myHeight =
+          window.innerHeight - // La taille de la fenêtre complete
+          tabTop - // L'ordonnée du haut du tableau
+          dtScrollHeadHeight - // La taille du header
+          dtScrollFootHeight - // La taille du footer
+          dtLayoutRowsHeight - // La taille de toutes les rows
+          10; // valeur statique pour assurer une marge
+        const dtScrollBody = document.querySelector(
+          `${self._ref}_wrapper .dt-scroll-body`
+        ) as HTMLElement;
+        if (tabTop + tabPosition.offsetHeight > window.innerHeight) {
+          dtScrollBody.style.minHeight = myHeight + 'px';
+          dtScrollBody.style.height = myHeight + 'px';
+        }
+      }
+    };
+  }
 
   handleBootrapTabChange<T>(instance: DataTable<T>) {
     // For JQUERY user
