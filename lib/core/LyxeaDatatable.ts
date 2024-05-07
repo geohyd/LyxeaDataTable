@@ -20,7 +20,7 @@ import Action, { ActionArgs } from '@plugins/action/Action';
 import DtButtons from './DtButtons';
 import Filters from './Filters';
 import LxRenderer from '@dto/Renderer';
-import {default  as jquery} from 'jquery';
+import { default as jquery } from 'jquery';
 
 //@ts-ignore
 window.JSZip = jszip;
@@ -254,32 +254,30 @@ class LyxeaDatatable<T>
 
     this.#dtButtons.parse(this.config.buttons);
 
-    jquery(`${this._ref}`)
-    .on('init.dt', (e, settings) => {
-        if ( e.namespace !== 'dt' ) {
-          return;
-        }
-        const dtInstance = settings.oInstance.api();
-        /**
-         * Adding filter inputs
-         */
-        if (lxConfig && lxConfig.filters) {
-          // @ts-ignore
-          this.#headerElement = new Filters(this.config, dtInstance).init(
-            this.#headerElement
-          );
-        }
+    jquery(`${this._ref}`).on('init.dt', (e, settings) => {
+      if (e.namespace !== 'dt') {
+        return;
+      }
+      const dtInstance = settings.oInstance.api();
+      /**
+       * Adding filter inputs
+       */
+      if (lxConfig && lxConfig.filters) {
+        // @ts-ignore
+        this.#headerElement = new Filters(this.config, dtInstance).init(
+          this.#headerElement
+        );
+      }
 
-        /**
-         * Fit scrollY to screen
-         */
-        if (lxConfig && lxConfig.scrollYFitToScreen){
-          this.scrollYFitToScreen();
-          // Force redraw (FitToScreen has an effect on the draw event)
-          dtInstance.draw();
-        }
-
-    })
+      /**
+       * Fit scrollY to screen
+       */
+      if (lxConfig && lxConfig.scrollYFitToScreen) {
+        this.scrollYFitToScreen();
+        // Force redraw (FitToScreen has an effect on the draw event)
+        dtInstance.draw();
+      }
+    });
     /**
      * Initializing datatable
      * Init event, get the datable instance on event.detail
@@ -300,9 +298,8 @@ class LyxeaDatatable<T>
 
   scrollYFitToScreen() {
     const self = this;
-    jquery(`${this._ref}`)
-    .on('draw.dt', (e, _) => {
-      if ( e.namespace !== 'dt' ) {
+    jquery(`${this._ref}`).on('draw.dt', (e, _) => {
+      if (e.namespace !== 'dt') {
         return;
       }
       const tabPosition = document.querySelector(

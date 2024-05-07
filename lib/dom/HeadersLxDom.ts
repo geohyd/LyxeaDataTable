@@ -59,7 +59,9 @@ class HeaderLxDom extends AbstractLxDom {
     if (
       /*Object.keys(groupedHeaders).length === 1 ||
       Object.keys(groupedHeaders).some((el) => el.startsWith(HeaderGroup.NONE))*/
-      !Object.keys(groupedHeaders).some(el => !el.startsWith(HeaderGroup.NONE))
+      !Object.keys(groupedHeaders).some(
+        (el) => !el.startsWith(HeaderGroup.NONE)
+      )
     ) {
       const headerCells = this.$mainRowHeader(groupedHeaders);
       const mainHeaderWrapper = this.$headerWrapper(
