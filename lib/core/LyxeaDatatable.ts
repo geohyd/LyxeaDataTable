@@ -20,6 +20,7 @@ import Action, { ActionArgs } from '@plugins/action/Action';
 import DtButtons from './DtButtons';
 import Filters from './Filters';
 import LxRenderer from '@dto/Renderer';
+import {default  as jquery} from 'jquery';
 
 //@ts-ignore
 window.JSZip = jszip;
@@ -177,7 +178,7 @@ class LyxeaDatatable<T>
         If columns in the standard object and in lxconfig, header generation is only based on lxconfig.
         This allows you to generate the header with all the columns (and not just the columns defined in lxconfig).
       */
-      if (lxConfig.headers && standardColumns) {
+      if (lxConfig.headers && standardColumns && standardColumns.length) {
         lxConfig.headers?.unshift({ columns: [...standardColumns] });
       }
       new LxRenderer(lxConfig);
@@ -253,24 +254,38 @@ class LyxeaDatatable<T>
 
     this.#dtButtons.parse(this.config.buttons);
 
-    if (lxConfig && lxConfig.scrollYFitToScreen)
-      this.scrollYFitToScreen(this.config);
+    jquery(`${this._ref}`)
+    .on('init.dt', (e, settings) => {
+        if ( e.namespace !== 'dt' ) {
+          return;
+        }
+        const dtInstance = settings.oInstance.api();
+        /**
+         * Adding filter inputs
+         */
+        if (lxConfig && lxConfig.filters) {
+          // @ts-ignore
+          this.#headerElement = new Filters(this.config, dtInstance).init(
+            this.#headerElement
+          );
+        }
 
+        /**
+         * Fit scrollY to screen
+         */
+        if (lxConfig && lxConfig.scrollYFitToScreen){
+          this.scrollYFitToScreen();
+          // Force redraw (FitToScreen has an effect on the draw event)
+          dtInstance.draw();
+        }
+
+    })
     /**
      * Initializing datatable
      * Init event, get the datable instance on event.detail
      */
     this.instance = new DataTable(`${this._ref}`, this.config);
     this.refElement.dispatchEvent(this.initEvent(this.instance));
-
-    /**
-     * Adding filter inputs
-     */
-    if (lxConfig && lxConfig.filters) {
-      this.#headerElement = new Filters(this.config, this.instance).init(
-        this.#headerElement
-      );
-    }
 
     /**
      * Handle issue with bootstrap tab nav
@@ -283,24 +298,37 @@ class LyxeaDatatable<T>
 
   __filterDataWithKey() {}
 
-  scrollYFitToScreen<T>(config: CustomDatatableConfig<T>) {
+  scrollYFitToScreen() {
     const self = this;
-    // @ts-ignore
-    config.drawCallback = function () {
+    jquery(`${this._ref}`)
+    .on('draw.dt', (e, _) => {
+      if ( e.namespace !== 'dt' ) {
+        return;
+      }
       const tabPosition = document.querySelector(
         `${self._ref}_wrapper`
       ) as HTMLElement;
       if (tabPosition) {
         const tabTop = tabPosition.getBoundingClientRect().top;
         const dtScrollHeadHeight = (
-          document.querySelector(
+          (document.querySelector(
             `${self._ref}_wrapper .dt-scroll-head`
-          ) as HTMLElement
+          ) as HTMLElement) || { offsetHeight: 0 }
+        ).offsetHeight;
+        const dtTop = (
+          (document.querySelector(
+            `${self._ref}_wrapper .top`
+          ) as HTMLElement) || { offsetHeight: 0 }
+        ).offsetHeight;
+        const dtBottom = (
+          (document.querySelector(
+            `${self._ref}_wrapper .bottom`
+          ) as HTMLElement) || { offsetHeight: 0 }
         ).offsetHeight;
         const dtScrollFootHeight = (
-          document.querySelector(
+          (document.querySelector(
             `${self._ref}_wrapper .dt-scroll-foot`
-          ) as HTMLElement
+          ) as HTMLElement) || { offsetHeight: 0 }
         ).offsetHeight;
         const dtLayoutRows = document.querySelectorAll(
           `${self._ref}_wrapper .dt-layout-row:not(.dt-layout-table)`
@@ -312,9 +340,11 @@ class LyxeaDatatable<T>
         const myHeight =
           window.innerHeight - // La taille de la fenêtre complete
           tabTop - // L'ordonnée du haut du tableau
-          dtScrollHeadHeight - // La taille du header
-          dtScrollFootHeight - // La taille du footer
-          dtLayoutRowsHeight - // La taille de toutes les rows
+          dtTop - // La taille du top (lorsqu'on utilise `dom`)
+          dtBottom - // La taille du bottom (lorsqu'on utilise `dom`)
+          dtScrollHeadHeight - // La taille du header (lorsqu'on utilise `layout`)
+          dtScrollFootHeight - // La taille du footer (lorsqu'on utilise `layout`)
+          dtLayoutRowsHeight - // La taille de toutes les rows (lorsqu'on utilise `layout`)
           10; // valeur statique pour assurer une marge
         const dtScrollBody = document.querySelector(
           `${self._ref}_wrapper .dt-scroll-body`
@@ -324,7 +354,7 @@ class LyxeaDatatable<T>
           dtScrollBody.style.height = myHeight + 'px';
         }
       }
-    };
+    });
   }
 
   handleBootrapTabChange<T>(instance: DataTable<T>) {
