@@ -55,10 +55,11 @@ class HeaderLxDom extends AbstractLxDom {
     );
 
     if (!Object.keys(groupedHeaders).length) return this.headerRef;
-    // if no groupheader is present, build only columns
+    // if no groupheader is present, build only columns (e.g. : there are only HeaderGroup.NONE groups)
     if (
-      Object.keys(groupedHeaders).length === 1 &&
-      Object.keys(groupedHeaders).some((el) => el.startsWith(HeaderGroup.NONE))
+      /*Object.keys(groupedHeaders).length === 1 ||
+      Object.keys(groupedHeaders).some((el) => el.startsWith(HeaderGroup.NONE))*/
+      !Object.keys(groupedHeaders).some(el => !el.startsWith(HeaderGroup.NONE))
     ) {
       const headerCells = this.$mainRowHeader(groupedHeaders);
       const mainHeaderWrapper = this.$headerWrapper(
