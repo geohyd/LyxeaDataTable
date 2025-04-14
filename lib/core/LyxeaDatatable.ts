@@ -94,7 +94,9 @@ class LyxeaDatatable<T>
   #standardColumnBuilder?: DtColumns;
   #customColumnBuilder?: DtHeaders;
   #dtButtons?: DtButtons;
+  // @ts-ignore
   #headerElement?: HTMLElement;
+  filterColumn?: Filters<T>;
 
   constructor(ref: string, config?: CustomDatatableConfig<T>) {
     super();
@@ -178,8 +180,10 @@ class LyxeaDatatable<T>
         If columns in the standard object and in lxconfig, header generation is only based on lxconfig.
         This allows you to generate the header with all the columns (and not just the columns defined in lxconfig).
       */
-      if (lxConfig.headers && standardColumns && standardColumns.length) {
-        lxConfig.headers?.unshift({ columns: [...standardColumns] });
+      if (standardColumns?.length) {
+        lxConfig.headers = lxConfig.headers ? 
+          [{ columns: [...standardColumns] }, ...lxConfig.headers] : 
+          [{ columns: [...standardColumns] }];
       }
       new LxRenderer(lxConfig);
       const headersBuilder = this.#customColumnBuilder
@@ -192,6 +196,11 @@ class LyxeaDatatable<T>
         config: lxConfig,
       });
       this.#headerElement = await headerUiBuilder.build();
+
+      if (lxConfig && lxConfig.filters) {
+        this.filterColumn = new Filters(this.refElement, lxConfig);
+        await this.filterColumn.build();
+      }
 
       /**
        * Get the data if not set
@@ -263,10 +272,16 @@ class LyxeaDatatable<T>
        * Adding filter inputs
        */
       if (lxConfig && lxConfig.filters) {
-        // @ts-ignore
-        this.#headerElement = new Filters(this.config, dtInstance).init(
-          this.#headerElement
-        );
+        this.filterColumn?.init(dtInstance, 'input');
+        if(this.config?.scrollX){
+          jquery(`${this._ref}_wrapper .dt-scroll-foot tfoot tr th`).removeAttr('data-dt-column');
+          var footer = jquery(`${this._ref}_wrapper .dt-scroll-foot tfoot tr`);
+          jquery(`${this._ref}_wrapper .dt-scroll-head thead`).append(footer);
+        } else {
+          jquery(`${this._ref} tfoot tr th`).removeAttr('data-dt-column');
+          var footer = jquery(`${this._ref} tfoot tr`);
+          jquery(`${this._ref} thead`).append(footer);
+        }
       }
 
       /**
