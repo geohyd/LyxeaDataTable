@@ -26,11 +26,23 @@ class Filters<T> {
 
         // Create input element
         if(type == 'input'){
+          // Create a container div for the input and icon
+          let container = document.createElement('div');
+          container.classList.add('column_search_container');
+          // Create the input element
           let input = document.createElement('input');
+          input.setAttribute("type", "text");
+          input.classList.add('column_search');
           input.placeholder = title;
+          // Create the icon element
+          let icon = document.createElement('i');
+          icon.classList.add('fa', 'fa-search');
+          // Append the input and icon to the container
+          container.appendChild(input);
+          container.appendChild(icon);
+          // Replace the footer content with the container
           // @ts-ignore
-          this.footer().replaceChildren(input);
-
+          this.footer().replaceChildren(container);
           // Event listener for user input
           input.addEventListener('keyup', () => {
               // @ts-ignore
@@ -42,6 +54,7 @@ class Filters<T> {
         }
     });
   }
+
 }
 
 export default Filters;
