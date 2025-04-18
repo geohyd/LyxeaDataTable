@@ -312,7 +312,7 @@ class LyxeaDatatable<T>
     if (lxConfig && lxConfig.handleBootrapTabChange)
       this.handleBootrapTabChange(this.instance);
 
-    if (lxConfig?.keepFixedHeaderInDT && this._ref && this.instance?.fixedHeader && this.instance?.fixedHeader.enabled()) {
+    if (lxConfig?.keepFixedHeaderInDT && this._ref) {
       this.__keepFixedHeaderInDT();
     }
     return this;
@@ -320,39 +320,42 @@ class LyxeaDatatable<T>
 
   __filterDataWithKey() {}
 
-  
   __keepFixedHeaderInDT() {
-    const onScroll = () => {
-      // Vérifie si FixedHeader est actif (présence de .dtfh-floatingparent)
-      // Et on le déplace en haut du tableau
-      
-      // Récupère l’élément DOM du tableau
-      const table = document.querySelector(this._ref);
-      if (!table) return;
-
-      const refClean = this._ref.startsWith('#') || this._ref.startsWith('.') 
-      ? this._ref.slice(1) 
-      : this._ref;
-      const expectedAriaDescribedBy = `${refClean}_info`;
-      // Cherche tous les floating headers possibles
-      const floatingHeaders = document.querySelectorAll('.dtfh-floatingparent');
-      // On cherche celui qui correspond à notre datatable
-      const floatingHeader = Array.from(floatingHeaders).find(header => {
-        const innerTable = header.querySelector('table');
-        return innerTable?.getAttribute('aria-describedby') === expectedAriaDescribedBy;
-      });
-      // Vérifie que le header n’est pas déjà dans le tableau
-      if (floatingHeader && !table.contains(floatingHeader)) {
-        // Insère le header tout en haut de la table
-        table.insertBefore(floatingHeader, table.firstChild);
-      }
-      // Supprimer l’event listener si on ne veut le faire qu’une fois :
-      // window.removeEventListener('scroll', onScroll);
-    };
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        for (const addedNode of mutation.addedNodes) {
+          if (!(addedNode instanceof HTMLElement)) continue;
   
-    // Ajoute l'écouteur
-    window.addEventListener('scroll', onScroll);
+          // Si on trouve un .dtfh-floatingparent
+          if (addedNode.classList.contains('dtfh-floatingparent')) {
+
+            const table = document.querySelector(this._ref);
+            if (!table) return;
+  
+            const refClean = this._ref.startsWith('#') || this._ref.startsWith('.') 
+              ? this._ref.slice(1) 
+              : this._ref;
+            const expectedAriaDescribedBy = `${refClean}_info`;
+  
+            const innerTable = addedNode.querySelector('table');
+            if (innerTable?.getAttribute('aria-describedby') === expectedAriaDescribedBy) {
+              if (!table.contains(addedNode)) {
+                table.insertBefore(addedNode, table.firstChild);
+              }
+            }
+          }
+        }
+      }
+    });
+  
+    // Observe tout le document (ou tu peux cibler un conteneur plus précis)
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
   }
+  
+
   _scrollYFitToScreen(config: ScrollYFitToScreen) {
     const self = this;
     const staticMargin = config && config.addStaticMargin ? config.addStaticMargin : 0;
