@@ -111,7 +111,7 @@ class Action {
         if (action.onError) action.onError(err, rowData);
       }
     });
-    this.#domBuilder.defineDefaultCellStyle(td as HTMLElement);
+    //this.#domBuilder.defineDefaultCellStyle(td as HTMLElement);
     if (this.#celllClassName)
       (td as HTMLElement).classList.add(this.#celllClassName);
     td.appendChild(btn);
