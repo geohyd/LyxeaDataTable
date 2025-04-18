@@ -13,10 +13,12 @@ type MultiRender<T> = Array<(d: T, type: any, row: any, meta: any) => T>;
 $.fn.dataTable.render.multi =
   <T>(renderArray: MultiRender<T>) =>
   (d: T, type: any, row: any, meta: any) => {
-    renderArray.forEach((render) => {
-      if (render) d = render(d, type, row, meta);
-    });
-    return d;
+    if (type == 'display') {
+      renderArray.forEach((render) => {
+        if (render) d = render(d, type, row, meta);
+      });
+      return d;
+    }
   };
 
 class LxRenderer {
