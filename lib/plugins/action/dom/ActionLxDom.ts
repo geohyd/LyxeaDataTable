@@ -34,7 +34,7 @@ class ActionLxDom extends AbstractLxDom {
         name: name,
         'aria-label': label ?? name,
       },
-      style: { ...defaultStyle, ...style } ?? defaultStyle,
+      style: { ...defaultStyle, ...style },
       onClick: Array.isArray(effect) ? effect : [effect],
     });
   }
