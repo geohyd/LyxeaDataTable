@@ -1,9 +1,13 @@
-import { CustomDatatableConfig } from './LyxeaDatatable';
-import DataTable from 'datatables.net-dt';
+import { LxConfigObject } from './LyxeaDatatable';
+import { default as DataTable } from 'datatables.net-dt';
+import { default as FooterLxDom } from '../dom/FootersLxDom';
+
 declare class Filters<T> {
-    #private;
-    constructor(config: CustomDatatableConfig<T>, instance?: DataTable<T>);
-    init(headerEl?: HTMLElement): HTMLElement | undefined;
-    _filterEvent(e: Event): void;
+    tableRef: HTMLElement | null;
+    config: LxConfigObject;
+    footerUiBuilder: FooterLxDom;
+    constructor(ref: HTMLElement, config: LxConfigObject);
+    build(id?: string, className?: string): Promise<HTMLElement>;
+    init(dtInstance: DataTable<T>, type: String): void;
 }
 export default Filters;

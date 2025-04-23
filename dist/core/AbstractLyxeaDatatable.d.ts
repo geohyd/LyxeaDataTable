@@ -1,4 +1,5 @@
 import { CustomDatatableConfig, ParsedConfig } from './LyxeaDatatable';
+
 declare class AbstractLyxeaDatatable {
     instance: any | null;
     constructor();

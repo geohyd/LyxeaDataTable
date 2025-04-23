@@ -1,2 +1,3 @@
-import LyxeaDatatable from './core/LyxeaDatatable';
+import { default as LyxeaDatatable } from './core/LyxeaDatatable';
+
 export default LyxeaDatatable;
