@@ -1,4 +1,5 @@
 import { ActionArgs } from './Action';
+
 export type CustomActionDef = {
     name: string;
     effect: (rowData: any) => void;

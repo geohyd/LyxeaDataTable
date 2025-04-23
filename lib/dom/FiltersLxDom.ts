@@ -1,6 +1,9 @@
 import AbstractLxDom from './AbstractLxDom';
 import DataTable from 'datatables.net';
 
+/**
+ * Deprecated
+ */
 class FiltersLxDom extends AbstractLxDom {
   #headerElement: Node;
   constructor(header: Node) {

@@ -1,5 +1,6 @@
 import { ConfigColumnDefs } from 'datatables.net-dt';
 import { CustomActionDef } from './CustomAction';
+
 export type ActionConfig = {
     width: string;
     className?: string;

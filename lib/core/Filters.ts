@@ -1,47 +1,60 @@
-import FiltersLxDom from '@dom/FiltersLxDom';
-import { CustomDatatableConfig } from './LyxeaDatatable';
+import { LxConfigObject } from './LyxeaDatatable';
 import DataTable from 'datatables.net-dt';
+import FooterLxDom from '@dom/FootersLxDom';
 
 class Filters<T> {
-  #domBuilder?: FiltersLxDom;
-  #headerLength: number;
-  #instance?: DataTable<T>;
+  tableRef: HTMLElement | null;
+  config: LxConfigObject;
+  footerUiBuilder: FooterLxDom;
 
-  constructor(config: CustomDatatableConfig<T>, instance?: DataTable<T>) {
-    this.#headerLength = this.#calculateHeaderLength(config);
-    this.#instance = instance;
+  constructor(ref: HTMLElement, config: LxConfigObject) {
+    this.tableRef = ref;
+    this.config = config;
+    this.footerUiBuilder = new FooterLxDom(this.tableRef, config);
   }
 
-  #calculateHeaderLength<T>(config: CustomDatatableConfig<T>): number {
-    let sum = 0;
-    if (config.columns) {
-      sum += config.columns.length;
-    }
-    if (config.lxConfig && config.lxConfig.headers) {
-      config.lxConfig.headers.forEach((header) => {
-        sum += header.columns.length;
-      });
-    }
-
-    return sum;
+  async build(
+    id = 'main_filter',
+    className = 'main_filter'
+  ): Promise<HTMLElement> {
+    return this.footerUiBuilder.build(id, className);
   }
 
-  init(headerEl?: HTMLElement): HTMLElement | undefined {
-    if (!headerEl) return;
-    if (!this.#instance) throw new Error('Instance is not defined');
-
-    this.#domBuilder = new FiltersLxDom(headerEl);
-    return this.#domBuilder.generate(
-      this.#headerLength,
-      this.#instance,
-      this._filterEvent
-    ) as HTMLElement;
-  }
-
-  _filterEvent(e: Event) {
-    const input = e.target as HTMLInputElement;
+  init(dtInstance: DataTable<T>, type: String) {
     // @ts-ignore
-    this.column(input.dataset.index).search(input.value).draw();
+    dtInstance.columns().every(function () {
+      // @ts-ignore
+      let title = this.footer().textContent;
+
+      // Create input element
+      if (type == 'input') {
+        // Create a container div for the input and icon
+        let container = document.createElement('div');
+        container.classList.add('column_search_container');
+        // Create the input element
+        let input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.classList.add('column_search');
+        input.placeholder = title;
+        // Create the icon element
+        let icon = document.createElement('i');
+        icon.classList.add('fa', 'fa-search');
+        // Append the input and icon to the container
+        container.appendChild(input);
+        container.appendChild(icon);
+        // Replace the footer content with the container
+        // @ts-ignore
+        this.footer().replaceChildren(container);
+        // Event listener for user input
+        input.addEventListener('keyup', () => {
+          // @ts-ignore
+          if (this.search() !== this.value) {
+            // @ts-ignore
+            this.search(input.value).draw();
+          }
+        });
+      }
+    });
   }
 }
 
