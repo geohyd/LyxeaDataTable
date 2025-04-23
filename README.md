@@ -151,7 +151,7 @@ To do it, simply add the key `actions` on the LyxaDatatable specific config obje
 
 | name               | description                                                                                | example                                              |
 | ------------------ | ------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
-| DATE_TO_FORMAT_*    | parse date to defined format                                                               | {render: 'DATE_TO_FORMAT_YYYY'} => '2024'            |
+| DATE*TO_FORMAT*\*  | parse date to defined format                                                               | {render: 'DATE_TO_FORMAT_YYYY'} => '2024'            |
 | DATE               | parse date to predefined date format                                                       | '23/04/2024 12:23'                                   |
 | DATE_DAY           | parse date with year, month and day only                                                   | '23/04/2024'                                         |
 | DATE_WITH_SECOND   | parse date to predefined date format                                                       | '23/04/2024 12:23:34'                                |
@@ -170,11 +170,10 @@ The lib exposes an `addRenderer()` method to dynamically inject your own renderi
 const table = new LyxeaDatatable({
   /* config */
   columns: [
-    { data: 'uuid', name: 'uuid', title: 'uuid', },
-    { data: 'status', name: 'status', title: 'Date', renderer: 'BOLD_RED' }
-  ]
+    { data: 'uuid', name: 'uuid', title: 'uuid' },
+    { data: 'status', name: 'status', title: 'Date', renderer: 'BOLD_RED' },
+  ],
   // ...
-    
 });
 
 table.dto.addRenderer('BOLD_RED', {
@@ -182,7 +181,7 @@ table.dto.addRenderer('BOLD_RED', {
     td.style.color = 'red';
     td.style.fontWeight = 'bold';
     td.innerText = data;
-  }
+  },
 });
 
 table.dto.addRenderer('MY_CUSTOM_RENDER', {
