@@ -6,7 +6,12 @@ import 'datatables.net-buttons/js/buttons.colVis.mjs';
 import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-buttons/js/buttons.print.mjs';
 
-import DataTable, { Config, ConfigColumns } from 'datatables.net-dt';
+import DataTable, {
+  Config,
+  ConfigColumns,
+  ConfigButtons,
+  ButtonConfig,
+} from 'datatables.net-dt';
 import AbstractLyxeaDatatable from './AbstractLyxeaDatatable';
 import DtHeaders from './DtHeaders';
 import Dao from '@dao/Dao';
@@ -40,17 +45,22 @@ export type CustomRenderer =
   | Array<Function>
   | Array<string | Function>;
 
+export type ScrollYFitToScreen = {
+  addStaticMargin?: number;
+};
+
 export interface CustomDatatableConfig<T> extends Config {
   lxConfig?: LxConfigObject;
   data?: Array<T>;
 }
 
 export type LxConfigObject = {
+  keepFixedHeaderInDT?: boolean;
   url?: string;
   headers?: LxHeadersConfig;
   filters?: boolean;
   handleBootrapTabChange?: boolean;
-  scrollYFitToScreen?: boolean;
+  scrollYFitToScreen?: boolean | ScrollYFitToScreen;
   row_action?: {
     width: string;
     className?: string;
@@ -94,7 +104,9 @@ class LyxeaDatatable<T>
   #standardColumnBuilder?: DtColumns;
   #customColumnBuilder?: DtHeaders;
   #dtButtons?: DtButtons;
+  // @ts-ignore
   #headerElement?: HTMLElement;
+  filterColumn?: Filters<T>;
 
   constructor(ref: string, config?: CustomDatatableConfig<T>) {
     super();
@@ -178,8 +190,10 @@ class LyxeaDatatable<T>
         If columns in the standard object and in lxconfig, header generation is only based on lxconfig.
         This allows you to generate the header with all the columns (and not just the columns defined in lxconfig).
       */
-      if (lxConfig.headers && standardColumns && standardColumns.length) {
-        lxConfig.headers?.unshift({ columns: [...standardColumns] });
+      if (standardColumns?.length) {
+        lxConfig.headers = lxConfig.headers
+          ? [{ columns: [...standardColumns] }, ...lxConfig.headers]
+          : [{ columns: [...standardColumns] }];
       }
       new LxRenderer(lxConfig);
       const headersBuilder = this.#customColumnBuilder
@@ -192,6 +206,11 @@ class LyxeaDatatable<T>
         config: lxConfig,
       });
       this.#headerElement = await headerUiBuilder.build();
+
+      if (lxConfig && lxConfig.filters) {
+        this.filterColumn = new Filters(this.refElement, lxConfig);
+        await this.filterColumn.build();
+      }
 
       /**
        * Get the data if not set
@@ -252,7 +271,9 @@ class LyxeaDatatable<T>
     if (!this.config.buttons)
       this.config.buttons = this.#dtButtons.getDefaults();
 
-    this.#dtButtons.parse(this.config.buttons);
+    this.#dtButtons.parse(
+      this.config.buttons as true | ConfigButtons | (string | ButtonConfig)[]
+    );
 
     jquery(`${this._ref}`).on('init.dt', (e, settings) => {
       if (e.namespace !== 'dt') {
@@ -263,17 +284,28 @@ class LyxeaDatatable<T>
        * Adding filter inputs
        */
       if (lxConfig && lxConfig.filters) {
-        // @ts-ignore
-        this.#headerElement = new Filters(this.config, dtInstance).init(
-          this.#headerElement
-        );
+        this.filterColumn?.init(dtInstance, 'input');
+        if (this.config?.scrollX) {
+          jquery(`${this._ref}_wrapper .dt-scroll-foot tfoot tr th`).removeAttr(
+            'data-dt-column'
+          );
+          var footer = jquery(`${this._ref}_wrapper .dt-scroll-foot tfoot tr`);
+          jquery(`${this._ref}_wrapper .dt-scroll-head thead`).append(footer);
+        } else {
+          jquery(`${this._ref} tfoot tr th`).removeAttr('data-dt-column');
+          var footer = jquery(`${this._ref} tfoot tr`);
+          jquery(`${this._ref} thead`).append(footer);
+        }
       }
 
       /**
        * Fit scrollY to screen
        */
-      if (lxConfig && lxConfig.scrollYFitToScreen) {
-        this.scrollYFitToScreen();
+      if (lxConfig?.scrollYFitToScreen) {
+        const scrollYConfig = this._convertToScrollYFitToScreenConfig(
+          lxConfig.scrollYFitToScreen
+        );
+        this._scrollYFitToScreen(scrollYConfig);
         // Force redraw (FitToScreen has an effect on the draw event)
         dtInstance.draw();
       }
@@ -291,13 +323,56 @@ class LyxeaDatatable<T>
     if (lxConfig && lxConfig.handleBootrapTabChange)
       this.handleBootrapTabChange(this.instance);
 
+    if (lxConfig?.keepFixedHeaderInDT && this._ref) {
+      this.__keepFixedHeaderInDT();
+    }
     return this;
   }
 
   __filterDataWithKey() {}
 
-  scrollYFitToScreen() {
+  __keepFixedHeaderInDT() {
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        for (const addedNode of mutation.addedNodes) {
+          if (!(addedNode instanceof HTMLElement)) continue;
+
+          // Si on trouve un .dtfh-floatingparent
+          if (addedNode.classList.contains('dtfh-floatingparent')) {
+            const table = document.querySelector(this._ref);
+            if (!table) return;
+
+            const refClean =
+              this._ref.startsWith('#') || this._ref.startsWith('.')
+                ? this._ref.slice(1)
+                : this._ref;
+            const expectedAriaDescribedBy = `${refClean}_info`;
+
+            const innerTable = addedNode.querySelector('table');
+            if (
+              innerTable?.getAttribute('aria-describedby') ===
+              expectedAriaDescribedBy
+            ) {
+              if (!table.contains(addedNode)) {
+                table.insertBefore(addedNode, table.firstChild);
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Observe tout le document (ou tu peux cibler un conteneur plus précis)
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  _scrollYFitToScreen(config: ScrollYFitToScreen) {
     const self = this;
+    const staticMargin =
+      config && config.addStaticMargin ? config.addStaticMargin : 0;
     jquery(`${this._ref}`).on('draw.dt', (e, _) => {
       if (e.namespace !== 'dt') {
         return;
@@ -334,6 +409,7 @@ class LyxeaDatatable<T>
           (acc, node) => acc + (node as HTMLElement).offsetHeight,
           0
         );
+        console.log('dtLayoutRowsHeight', dtLayoutRowsHeight);
         const myHeight =
           window.innerHeight - // La taille de la fenêtre complete
           tabTop - // L'ordonnée du haut du tableau
@@ -342,7 +418,7 @@ class LyxeaDatatable<T>
           dtScrollHeadHeight - // La taille du header (lorsqu'on utilise `layout`)
           dtScrollFootHeight - // La taille du footer (lorsqu'on utilise `layout`)
           dtLayoutRowsHeight - // La taille de toutes les rows (lorsqu'on utilise `layout`)
-          10; // valeur statique pour assurer une marge
+          staticMargin; // valeur statique pour assurer une marge
         const dtScrollBody = document.querySelector(
           `${self._ref}_wrapper .dt-scroll-body`
         ) as HTMLElement;
@@ -368,6 +444,18 @@ class LyxeaDatatable<T>
         instance.draw();
       });
     });
+  }
+
+  // Créer une fonction utilitaire pour convertir le paramètre
+  _convertToScrollYFitToScreenConfig(
+    config: boolean | ScrollYFitToScreen
+  ): ScrollYFitToScreen {
+    if (typeof config === 'boolean' && config === true) {
+      return {
+        addStaticMargin: 0,
+      };
+    }
+    return config as ScrollYFitToScreen;
   }
 }
 
