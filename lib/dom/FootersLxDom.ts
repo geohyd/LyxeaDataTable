@@ -7,8 +7,7 @@ class FooterLxDom extends AbstractLxDom {
   footerRef: HTMLElement | null = null;
   config: LxConfigObject;
 
-
-  constructor(ref: HTMLElement, config : LxConfigObject) {
+  constructor(ref: HTMLElement, config: LxConfigObject) {
     super();
     this.tableRef = ref;
     this.config = config;
@@ -18,23 +17,25 @@ class FooterLxDom extends AbstractLxDom {
   }
 
   appendTableFooter = () => {
-    if(!this.tableRef?.querySelector('tfoot'))
+    if (!this.tableRef?.querySelector('tfoot'))
       this.tableRef?.append(this.$element('tfoot', {}));
-  }
+  };
 
   getFooterElement = (): HTMLElement | null => {
     this.footerRef = this.tableRef?.querySelector('tfoot') ?? null;
     return this.footerRef;
   };
 
-
-  async build(id = 'main_footer', className = 'main_footer'): Promise<HTMLElement> {
+  async build(
+    id = 'main_footer',
+    className = 'main_footer'
+  ): Promise<HTMLElement> {
     if (!this.footerRef) throw new DomError('Cannot select the dom footer ref');
     if (!this.config.headers?.length) return this.footerRef;
-    
+
     const groupFooterCells: Array<HTMLElement> = [];
-    this.config.headers?.forEach(header => {
-      header.columns?.forEach(column => {
+    this.config.headers?.forEach((header) => {
+      header.columns?.forEach((column) => {
         groupFooterCells.push(
           this.$element('th', {
             classList: ['colspan-border'],
@@ -46,17 +47,16 @@ class FooterLxDom extends AbstractLxDom {
             style: column.style,
           })
         );
-      })
-    })
+      });
+    });
     const groupFooterWrapper = this.$element('tr', {
       attributes: { class: className, id: id },
       children: groupFooterCells,
-    })
+    });
     this.footerRef?.append(groupFooterWrapper);
 
     return this.footerRef;
   }
-
 }
 
 export default FooterLxDom;

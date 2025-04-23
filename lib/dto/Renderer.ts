@@ -9,7 +9,7 @@ const CustomRenderers = {
         return dayjs(data).format('DD/MM/YYYY');
       }
       return data;
-    }
+    },
   },
   DATE_WITH_SECOND: {
     render: function (data: any, type: any) {
@@ -17,7 +17,7 @@ const CustomRenderers = {
         return dayjs(data).format('DD/MM/YYYY HH:mm:ss');
       }
       return data;
-    }
+    },
   },
   LOCAL_NUMBER: {
     render: function (data: any, type: any) {
@@ -25,7 +25,7 @@ const CustomRenderers = {
         return data.toLocaleString();
       }
       return data;
-    }
+    },
   },
   BOOLEAN_OUI_NON: {
     render: function (data: any, type: any) {
@@ -64,15 +64,15 @@ const CustomRenderers = {
   PARSE_INT: {
     render: function (data: any) {
       return parseInt(data);
-    }
+    },
   },
   UPPERCASE: {
     render: (data: any) =>
-      typeof data === 'string' ? data.toUpperCase() : data
+      typeof data === 'string' ? data.toUpperCase() : data,
   },
   LOWERCASE: {
     render: (data: any) =>
-      typeof data === 'string' ? data.toLowerCase() : data
+      typeof data === 'string' ? data.toLowerCase() : data,
   },
   CUT_LONG_TEXT: {
     createdCell: function (td: any, cellData: any) {
@@ -82,12 +82,12 @@ const CustomRenderers = {
           td.innerText = cellData.substring(0, 28) + '…';
         }
       }
-    }
+    },
   },
   CHECKBOX: {
     checkboxes: {
       selectRow: true,
-    }
+    },
   },
   _dynamic: [
     {
@@ -101,11 +101,11 @@ const CustomRenderers = {
               return dayjs(data).format(format);
             }
             return data;
-          }
+          },
         };
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 
 function resolveRenderer(nameOrObject: any) {
@@ -132,7 +132,9 @@ class LxRenderer {
         for (const config of headers.columns) {
           if (!config.renderer) continue;
           if (Array.isArray(config.renderer)) {
-            console.warn('Multiple renderers are not supported yet. Please use a single renderer.');
+            console.warn(
+              'Multiple renderers are not supported yet. Please use a single renderer.'
+            );
             config.renderer = config.renderer[0];
           }
           const renderConf = resolveRenderer(config.renderer);
