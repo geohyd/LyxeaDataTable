@@ -1,4 +1,5 @@
 import { ButtonConfig, ConfigButtons } from 'datatables.net-dt';
+
 declare class DtButtons {
     getDefaults(): (string | {
         text: string;

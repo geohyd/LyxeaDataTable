@@ -1,5 +1,9 @@
-import AbstractLxDom from './AbstractLxDom';
-import DataTable from 'datatables.net';
+import { default as AbstractLxDom } from './AbstractLxDom';
+import { default as DataTable } from 'datatables.net';
+
+/**
+ * Deprecated
+ */
 declare class FiltersLxDom extends AbstractLxDom {
     #private;
     constructor(header: Node);

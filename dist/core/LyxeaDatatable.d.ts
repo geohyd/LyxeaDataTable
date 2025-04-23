@@ -1,10 +1,12 @@
-import DataTable, { Config, ConfigColumns } from 'datatables.net-dt';
-import AbstractLyxeaDatatable from './AbstractLyxeaDatatable';
-import Dao from '../dao/Dao';
-import Dto from '../dto/Dto';
+import { default as DataTable, Config, ConfigColumns } from 'datatables.net-dt';
+import { default as AbstractLyxeaDatatable } from './AbstractLyxeaDatatable';
+import { default as Dao } from '../dao/Dao';
+import { default as Dto } from '../dto/Dto';
 import { ILyxeaDatatable } from 'lib/types/LxDt_interface';
-import Transformers from '../dto/Transformers';
+import { default as Transformers } from '../dto/Transformers';
 import { ActionArgs } from '../plugins/action/Action';
+import { default as Filters } from './Filters';
+
 /**
  * @types
  */
@@ -13,15 +15,20 @@ export interface CustomConfigColumns extends ConfigColumns {
     style?: Record<string, Partial<CSSStyleDeclaration>>;
 }
 export type CustomRenderer = string | Function | Array<string> | Array<Function> | Array<string | Function>;
+export type ScrollYFitToScreen = {
+    addStaticMargin?: number;
+};
 export interface CustomDatatableConfig<T> extends Config {
     lxConfig?: LxConfigObject;
     data?: Array<T>;
 }
 export type LxConfigObject = {
+    keepFixedHeaderInDT?: boolean;
     url?: string;
     headers?: LxHeadersConfig;
     filters?: boolean;
     handleBootrapTabChange?: boolean;
+    scrollYFitToScreen?: boolean | ScrollYFitToScreen;
     row_action?: {
         width: string;
         className?: string;
@@ -56,6 +63,7 @@ declare class LyxeaDatatable<T> extends AbstractLyxeaDatatable implements ILyxea
     dao: Dao<T>;
     dto: Dto<T>;
     tranformer: Transformers<T>;
+    filterColumn?: Filters<T>;
     constructor(ref: string, config?: CustomDatatableConfig<T>);
     /**
      * Get the default datatable config if not set
@@ -69,6 +77,9 @@ declare class LyxeaDatatable<T> extends AbstractLyxeaDatatable implements ILyxea
      */
     init(): Promise<LyxeaDatatable<T>>;
     __filterDataWithKey(): void;
+    __keepFixedHeaderInDT(): void;
+    _scrollYFitToScreen(config: ScrollYFitToScreen): void;
     handleBootrapTabChange<T>(instance: DataTable<T>): void;
+    _convertToScrollYFitToScreenConfig(config: boolean | ScrollYFitToScreen): ScrollYFitToScreen;
 }
 export default LyxeaDatatable;

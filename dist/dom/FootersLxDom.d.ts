@@ -1,5 +1,6 @@
-import AbstractLxDom from './AbstractLxDom';
+import { default as AbstractLxDom } from './AbstractLxDom';
 import { LxConfigObject } from '../core/LyxeaDatatable';
+
 declare class FooterLxDom extends AbstractLxDom {
     tableRef: HTMLElement | null;
     footerRef: HTMLElement | null;
