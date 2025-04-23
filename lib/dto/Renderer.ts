@@ -2,7 +2,7 @@ import { LxConfigObject } from '@core/LyxeaDatatable';
 import '../utils/fixToFixed';
 import dayjs from 'dayjs';
 
-const CustomRenderers = {
+const CustomRenderers: Record<string, any> = {
   DATE_DAY: {
     render: function (data: any, type: any) {
       if (type === 'display' || type === 'filter') {
@@ -154,3 +154,4 @@ class LxRenderer {
 }
 
 export default LxRenderer;
+export { CustomRenderers };
