@@ -53853,7 +53853,9 @@ class K1 {
       for (const w of g.columns) {
         if (!w.renderer)
           continue;
-        Array.isArray(w.renderer) && (console.warn("Multiple renderers are not supported yet. Please use a single renderer."), w.renderer = w.renderer[0]);
+        Array.isArray(w.renderer) && (console.warn(
+          "Multiple renderers are not supported yet. Please use a single renderer."
+        ), w.renderer = w.renderer[0]);
         const L = Y1(w.renderer);
         L.render && (w.render = L.render), L.createdCell && (w.createdCell = L.createdCell), L.checkboxes && (w.checkboxes = L.checkboxes);
       }
@@ -53940,14 +53942,18 @@ class $1 extends B1 {
           console.error(i.message);
         }
       }
-      return this.config.buttons || (this.config.buttons = un(this, bi).getDefaults()), un(this, bi).parse(this.config.buttons), Wn(`${this._ref}`).on("init.dt", (t, i) => {
+      return this.config.buttons || (this.config.buttons = un(this, bi).getDefaults()), un(this, bi).parse(
+        this.config.buttons
+      ), Wn(`${this._ref}`).on("init.dt", (t, i) => {
         var o, h;
         if (t.namespace !== "dt")
           return;
         const r = i.oInstance.api();
         if (B && B.filters)
           if ((o = this.filterColumn) == null || o.init(r, "input"), (h = this.config) != null && h.scrollX) {
-            Wn(`${this._ref}_wrapper .dt-scroll-foot tfoot tr th`).removeAttr("data-dt-column");
+            Wn(`${this._ref}_wrapper .dt-scroll-foot tfoot tr th`).removeAttr(
+              "data-dt-column"
+            );
             var n = Wn(`${this._ref}_wrapper .dt-scroll-foot tfoot tr`);
             Wn(`${this._ref}_wrapper .dt-scroll-head thead`).append(n);
           } else {
@@ -53956,7 +53962,9 @@ class $1 extends B1 {
             Wn(`${this._ref} thead`).append(n);
           }
         if (B != null && B.scrollYFitToScreen) {
-          const u = this._convertToScrollYFitToScreenConfig(B.scrollYFitToScreen);
+          const u = this._convertToScrollYFitToScreenConfig(
+            B.scrollYFitToScreen
+          );
           this._scrollYFitToScreen(u), r.draw();
         }
       }), this.instance = new de(`${this._ref}`, this.config), this.refElement.dispatchEvent(this.initEvent(this.instance)), B && B.handleBootrapTabChange && this.handleBootrapTabChange(this.instance), B != null && B.keepFixedHeaderInDT && this._ref && this.__keepFixedHeaderInDT(), this;
