@@ -1,3 +1,4 @@
+import { CustomRenderers } from './Renderer';
 interface Cols {
   name: string;
 }
@@ -16,6 +17,23 @@ class Dto<T> {
         return newObj;
       })
       .filter((newObj) => Object.keys(newObj).length > 0);
+  }
+
+  addRenderer(name: string, renderer: any) {
+    if (typeof name !== 'string' || !renderer) {
+      throw new Error('Invalid renderer declaration');
+    }
+    CustomRenderers[name] = renderer;
+  }
+
+  addDynamicRenderer(
+    pattern: RegExp,
+    handler: (match: RegExpMatchArray) => any
+  ) {
+    if (!CustomRenderers._dynamic) {
+      CustomRenderers._dynamic = [];
+    }
+    CustomRenderers._dynamic.push({ pattern, handler });
   }
 }
 
