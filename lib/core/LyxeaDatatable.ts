@@ -409,7 +409,6 @@ class LyxeaDatatable<T>
           (acc, node) => acc + (node as HTMLElement).offsetHeight,
           0
         );
-        console.log('dtLayoutRowsHeight', dtLayoutRowsHeight);
         const myHeight =
           window.innerHeight - // La taille de la fenêtre complete
           tabTop - // L'ordonnée du haut du tableau
