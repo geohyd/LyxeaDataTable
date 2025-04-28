@@ -53286,22 +53286,22 @@ var M1 = Cl.exports;
 const ks = /* @__PURE__ */ hl(M1), qa = {
   DATE_DAY: {
     render: function(a, v) {
-      return v === "display" || v === "filter" ? ks(a).format("DD/MM/YYYY") : a;
+      return v === "display" || v === "filter" || v === "export" ? ks(a).format("DD/MM/YYYY") : a;
     }
   },
   DATE_WITH_SECOND: {
     render: function(a, v) {
-      return v === "display" || v === "filter" ? ks(a).format("DD/MM/YYYY HH:mm:ss") : a;
+      return v === "display" || v === "filter" || v === "export" ? ks(a).format("DD/MM/YYYY HH:mm:ss") : a;
     }
   },
   LOCAL_NUMBER: {
     render: function(a, v) {
-      return v === "display" || v === "filter" ? a.toLocaleString() : a;
+      return v === "display" || v === "filter" || v === "export" ? a.toLocaleString() : a;
     }
   },
   BOOLEAN_OUI_NON: {
     render: function(a, v) {
-      return v === "display" || v === "filter" ? a === !0 ? "Oui" : "Non" : a;
+      return v === "display" || v === "filter" || v === "export" ? a === !0 ? "Oui" : "Non" : a;
     }
   },
   NUMBER_FIXED_2: {
@@ -53337,8 +53337,8 @@ const ks = /* @__PURE__ */ hl(M1), qa = {
     render: (a) => typeof a == "string" ? a.toLowerCase() : a
   },
   CUT_LONG_TEXT: {
-    createdCell: function(a, v) {
-      typeof v == "string" && v.length > 30 && (a.title = v, a.innerText = v.substring(0, 28) + "…");
+    render: function(a, v) {
+      return v === "display" && typeof a == "string" && a.length > 6 ? a.substring(0, 4) + "…" : a;
     }
   },
   CHECKBOX: {
@@ -53353,7 +53353,7 @@ const ks = /* @__PURE__ */ hl(M1), qa = {
         const v = a[1];
         return {
           render: function(g, w) {
-            return w === "display" || w === "filter" ? ks(g).format(v) : g;
+            return w === "display" || w === "filter" || w === "export" ? ks(g).format(v) : g;
           }
         };
       }
@@ -53773,13 +53773,28 @@ _i = new WeakMap(), mi = new WeakMap(), yi = new WeakMap(), to = new WeakMap(), 
 class Z1 {
   getDefaults() {
     return [
-      "copyHtml5",
-      "excelHtml5",
-      "csvHtml5",
+      {
+        extend: "copyHtml5",
+        exportOptions: {
+          orthogonal: "export"
+        }
+      },
+      {
+        extend: "excelHtml5",
+        exportOptions: {
+          orthogonal: "export"
+        }
+      },
+      {
+        extend: "csvHtml5",
+        exportOptions: {
+          orthogonal: "export"
+        }
+      },
       {
         text: "JSON",
         action: function(v, g) {
-          var w = g.buttons.exportData({ orthogonal: "export_json" });
+          var w = g.rows({ orthogonal: "export" }).data().toArray();
           Wn.fn.dataTable.fileSave(
             new Blob([JSON.stringify(w)]),
             "Exported_data.json"

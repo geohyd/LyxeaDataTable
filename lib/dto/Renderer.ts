@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 const CustomRenderers: Record<string, any> = {
   DATE_DAY: {
     render: function (data: any, type: any) {
-      if (type === 'display' || type === 'filter') {
+      if (type === 'display' || type === 'filter' || type === 'export') {
         return dayjs(data).format('DD/MM/YYYY');
       }
       return data;
@@ -13,7 +13,7 @@ const CustomRenderers: Record<string, any> = {
   },
   DATE_WITH_SECOND: {
     render: function (data: any, type: any) {
-      if (type === 'display' || type === 'filter') {
+      if (type === 'display' || type === 'filter' || type === 'export') {
         return dayjs(data).format('DD/MM/YYYY HH:mm:ss');
       }
       return data;
@@ -21,7 +21,7 @@ const CustomRenderers: Record<string, any> = {
   },
   LOCAL_NUMBER: {
     render: function (data: any, type: any) {
-      if (type === 'display' || type === 'filter') {
+      if (type === 'display' || type === 'filter' || type === 'export') {
         return data.toLocaleString();
       }
       return data;
@@ -29,7 +29,7 @@ const CustomRenderers: Record<string, any> = {
   },
   BOOLEAN_OUI_NON: {
     render: function (data: any, type: any) {
-      if (type === 'display' || type === 'filter') {
+      if (type === 'display' || type === 'filter' || type === 'export') {
         return data === true ? 'Oui' : 'Non';
       }
       return data;
@@ -75,13 +75,15 @@ const CustomRenderers: Record<string, any> = {
       typeof data === 'string' ? data.toLowerCase() : data,
   },
   CUT_LONG_TEXT: {
-    createdCell: function (td: any, cellData: any) {
-      if (typeof cellData === 'string') {
-        if (cellData.length > 30) {
-          td.title = cellData;
-          td.innerText = cellData.substring(0, 28) + '…';
+    render: function (data: any, type: any) {
+      if (type === 'display') {
+        if (typeof data === 'string') {
+          if (data.length > 6) {
+            return data.substring(0, 4) + '…';
+          }
         }
       }
+      return data;
     },
   },
   CHECKBOX: {
@@ -96,8 +98,7 @@ const CustomRenderers: Record<string, any> = {
         const format = match[1];
         return {
           render: function (data: any, type: any) {
-            if (type === 'display' || type === 'filter') {
-              //return moment(data).format(format);
+            if (type === 'display' || type === 'filter' || type === 'export') {
               return dayjs(data).format(format);
             }
             return data;
