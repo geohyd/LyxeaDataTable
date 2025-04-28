@@ -53338,7 +53338,7 @@ const ks = /* @__PURE__ */ hl(M1), qa = {
   },
   CUT_LONG_TEXT: {
     render: function(a, v) {
-      return v === "display" && typeof a == "string" && a.length > 6 ? a.substring(0, 4) + "…" : a;
+      return v === "display" && typeof a == "string" && a.length > 30 ? a.substring(0, 28) + "…" : a;
     }
   },
   CHECKBOX: {
