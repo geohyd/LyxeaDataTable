@@ -78,8 +78,8 @@ const CustomRenderers: Record<string, any> = {
     render: function (data: any, type: any) {
       if (type === 'display') {
         if (typeof data === 'string') {
-          if (data.length > 6) {
-            return data.substring(0, 4) + '…';
+          if (data.length > 30) {
+            return data.substring(0, 28) + '…';
           }
         }
       }
