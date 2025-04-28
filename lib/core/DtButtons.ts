@@ -4,20 +4,23 @@ import $ from 'jquery';
 class DtButtons {
   getDefaults() {
     return [
-      {extend: 'copyHtml5',
+      {
+        extend: 'copyHtml5',
         exportOptions: {
-            orthogonal: 'export'
-        }
+          orthogonal: 'export',
+        },
       },
-      {extend: 'excelHtml5',
+      {
+        extend: 'excelHtml5',
         exportOptions: {
-            orthogonal: 'export'
-        }
+          orthogonal: 'export',
+        },
       },
-      {extend: 'csvHtml5',
+      {
+        extend: 'csvHtml5',
         exportOptions: {
-            orthogonal: 'export'
-        }
+          orthogonal: 'export',
+        },
       },
       {
         text: 'JSON',

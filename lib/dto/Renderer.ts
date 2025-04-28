@@ -84,7 +84,7 @@ const CustomRenderers: Record<string, any> = {
         }
       }
       return data;
-    }
+    },
   },
   CHECKBOX: {
     checkboxes: {
