@@ -53675,13 +53675,13 @@ class V1 {
     mr(this, "retrieve", () => this.customActions);
     this.customActions = [
       {
-        name: "SURVEA_EDIT",
+        name: "FOLLOW_URL_REDIRECT",
         effect: (w) => ea(this, null, function* () {
           if (!v.url)
             throw new Error("URL is not defined");
           try {
             const L = g(v.url, w), B = yield G1.fetchUrl(L);
-            B.url || window.open(B.url, v.blank ? "_blank" : "_self");
+            B.url && window.open(B.url, v.blank ? "_blank" : "_self");
           } catch (L) {
             throw L;
           }
