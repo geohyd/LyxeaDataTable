@@ -8,19 +8,17 @@ class ActionLxDom extends AbstractLxDom {
 
   $actionButton({
     name,
-    label,
-    iconTitle,
+    title,
     icon,
+    iconClassList,
+    btnClassList,
     style,
     effect,
   }: ActionArgsWithEffect): HTMLButtonElement {
-    const defaultStyle: Record<string, Partial<CSSStyleDeclaration>> = {
-      padding: '4px',
-    };
     let _icon;
-    if (iconTitle) {
+    if (iconClassList) {
       _icon = this.$element('i', {
-        classList: ['fa', iconTitle],
+        classList: ['fa'].concat(iconClassList || []),
       });
     }
     if (icon) {
@@ -28,13 +26,14 @@ class ActionLxDom extends AbstractLxDom {
     }
 
     return this.$element<HTMLButtonElement>('button', {
-      classList: ['btn'],
+      classList: ['btn'].concat(btnClassList || []),
       children: [_icon!],
       attributes: {
         name: name,
-        'aria-label': label ?? name,
+        title: title ?? "",
+        'aria-label': title ?? name,
       },
-      style: { ...defaultStyle, ...style },
+      style: { ...style },
       onClick: Array.isArray(effect) ? effect : [effect],
     });
   }
