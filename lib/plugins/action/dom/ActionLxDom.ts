@@ -30,7 +30,7 @@ class ActionLxDom extends AbstractLxDom {
       children: [_icon!],
       attributes: {
         name: name,
-        title: title ?? "",
+        title: title ?? '',
         'aria-label': title ?? name,
       },
       style: { ...style },
