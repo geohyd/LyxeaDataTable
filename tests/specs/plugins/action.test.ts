@@ -41,7 +41,7 @@ describe('Action', () => {
         width: '50px',
         actions: [
           // @ts-ignore
-          { iconTitle: 'icon1', url: 'url1', blank: true, effect: () => {} },
+          { iconClassList: ['icon1'], url: 'url1', blank: true, effect: () => {} },
         ],
       };
       const action = new Action(config);
@@ -53,7 +53,7 @@ describe('Action', () => {
         width: '50px',
         actions: [
           // @ts-ignore
-          { iconTitle: 'icon1', name: 'action1', blank: true },
+          { iconClassList: ['icon1'], name: 'action1', blank: true },
         ],
       };
       const action = new Action(config);
@@ -65,7 +65,7 @@ describe('Action', () => {
         width: '50px',
         actions: [
           // @ts-ignore
-          { iconTitle: 'icon1', name: 'action1', effect: 'toto' },
+          { iconClassList: ['icon1'], name: 'action1', effect: 'toto' },
         ],
       };
       const action = new Action(config);
@@ -98,7 +98,7 @@ describe('test _getUrlParams', () => {
     actions: [
       // @ts-ignore
       {
-        iconTitle: 'icon1',
+        iconClassList: ['icon1'],
         name: 'action1',
         url: 'https://example.com/api/{resource}/{id}',
         blank: true,
@@ -145,7 +145,7 @@ describe('parseUrlString', () => {
     actions: [
       // @ts-ignore
       {
-        iconTitle: 'icon1',
+        iconClassList: ['icon1'],
         name: 'action1',
         url: 'https://example.com/api/{resource}/{id}',
         blank: true,
