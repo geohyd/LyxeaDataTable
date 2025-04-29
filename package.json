@@ -11,16 +11,17 @@
     ".": {
       "import": [
         "./dist/lx_dt.js"
-      ]
+      ],
+      "types": "./dist/main.d.ts"
     }
   },
   "types": "./dist/main.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "watch": "tsc && vite build --watch",
+    "watch": "tsc && vite build --watch  --mode dev",
     "preview": "vite preview",
-    "test": "export NODE_ENV=test && jest",
+    "test": "set NODE_ENV=test && jest",
     "coverage": "jest --coverage",
     "fmt": "npx prettier . --write",
     "prettier:check": "prettier --check ."
@@ -46,10 +47,10 @@
     "datatables.net-buttons": "^3.0.0",
     "datatables.net-buttons-bs4": "^3.0.0",
     "datatables.net-buttons-dt": "^3.0.0",
-    "datatables.net-dt": "^1.13.6",
+    "datatables.net-dt": "^2.2.2",
     "datatables.net-fixedcolumns-dt": "^4.3.0",
     "datatables.net-fixedheader-dt": "^4.0.0",
-    "datatables.net-jqui": "^2.0.0",
+    "datatables.net-jqui": "^2.2.2",
     "datatables.net-responsive-dt": "^3.0.0",
     "datatables.net-responsive-jqui": "^3.0.0",
     "dayjs": "^1.11.10",
