@@ -14,13 +14,13 @@ class CustomAction {
   ) {
     this.customActions = [
       {
-        name: 'SURVEA_EDIT',
+        name: 'FOLLOW_URL_REDIRECT',
         effect: async (rowData: any) => {
           if (!action.url) throw new Error('URL is not defined');
           try {
             const parsedUrl = parsingUrl(action.url, rowData);
             const redirectUrl = await ActionDao.fetchUrl(parsedUrl);
-            if (!redirectUrl.url)
+            if (redirectUrl.url)
               window.open(redirectUrl.url, action.blank ? '_blank' : '_self');
           } catch (err) {
             throw err;
