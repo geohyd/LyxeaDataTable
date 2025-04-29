@@ -41,7 +41,12 @@ describe('Action', () => {
         width: '50px',
         actions: [
           // @ts-ignore
-          { iconClassList: ['icon1'], url: 'url1', blank: true, effect: () => {} },
+          {
+            iconClassList: ['icon1'],
+            url: 'url1',
+            blank: true,
+            effect: () => {},
+          },
         ],
       };
       const action = new Action(config);
