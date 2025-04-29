@@ -11,9 +11,10 @@ export type ActionConfig = {
 
 export type ActionArgs = {
   name: string;
-  label?: string;
   icon?: HTMLElement;
-  iconTitle?: string;
+  title?: string;
+  iconClassList?: Array<string>;
+  btnClassList?: Array<string>;
   style?: Record<string, Partial<CSSStyleDeclaration>>;
   url?: string;
   customAction?: string;
@@ -143,7 +144,7 @@ class Action {
    */
   validateConfig(): Action {
     this.#actionConfig.map((config) => {
-      if (!config.icon && !config.iconTitle)
+      if (!config.icon && !config.iconClassList)
         throw new ActionError('You must provide an icon name or an icon title');
       if (config.icon && !(config.icon instanceof HTMLElement))
         throw new ActionError('Icon must be of type HTMLElement');

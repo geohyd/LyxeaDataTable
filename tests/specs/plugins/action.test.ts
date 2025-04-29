@@ -7,7 +7,7 @@ import ActionError from '../../../lib/plugins/action/ActionError';
 
 describe('Action', () => {
   describe('validateConfig', () => {
-    it('should throw an ActionError if icon and iconTitle are not provided', () => {
+    it('should throw an ActionError if icon and iconClassList are not provided', () => {
       const config: ActionConfig = {
         width: '50px',
         actions: [
@@ -41,7 +41,12 @@ describe('Action', () => {
         width: '50px',
         actions: [
           // @ts-ignore
-          { iconTitle: 'icon1', url: 'url1', blank: true, effect: () => {} },
+          {
+            iconClassList: ['icon1'],
+            url: 'url1',
+            blank: true,
+            effect: () => {},
+          },
         ],
       };
       const action = new Action(config);
@@ -53,7 +58,7 @@ describe('Action', () => {
         width: '50px',
         actions: [
           // @ts-ignore
-          { iconTitle: 'icon1', name: 'action1', blank: true },
+          { iconClassList: ['icon1'], name: 'action1', blank: true },
         ],
       };
       const action = new Action(config);
@@ -65,7 +70,7 @@ describe('Action', () => {
         width: '50px',
         actions: [
           // @ts-ignore
-          { iconTitle: 'icon1', name: 'action1', effect: 'toto' },
+          { iconClassList: ['icon1'], name: 'action1', effect: 'toto' },
         ],
       };
       const action = new Action(config);
@@ -78,7 +83,7 @@ describe('Action', () => {
         actions: [
           // @ts-ignore
           {
-            iconTitle: 'icon1',
+            iconClassList: ['icon1'],
             name: 'action1',
             url: 'url1',
             blank: true,
@@ -98,7 +103,7 @@ describe('test _getUrlParams', () => {
     actions: [
       // @ts-ignore
       {
-        iconTitle: 'icon1',
+        iconClassList: ['icon1'],
         name: 'action1',
         url: 'https://example.com/api/{resource}/{id}',
         blank: true,
@@ -145,7 +150,7 @@ describe('parseUrlString', () => {
     actions: [
       // @ts-ignore
       {
-        iconTitle: 'icon1',
+        iconClassList: ['icon1'],
         name: 'action1',
         url: 'https://example.com/api/{resource}/{id}',
         blank: true,

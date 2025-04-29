@@ -8,9 +8,10 @@ export type ActionConfig = {
 };
 export type ActionArgs = {
     name: string;
-    label?: string;
     icon?: HTMLElement;
-    iconTitle?: string;
+    title?: string;
+    iconClassList?: Array<string>;
+    btnClassList?: Array<string>;
     style?: Record<string, Partial<CSSStyleDeclaration>>;
     url?: string;
     customAction?: string;
