@@ -7,7 +7,7 @@ import ActionError from '../../../lib/plugins/action/ActionError';
 
 describe('Action', () => {
   describe('validateConfig', () => {
-    it('should throw an ActionError if icon and iconTitle are not provided', () => {
+    it('should throw an ActionError if icon and iconClassList are not provided', () => {
       const config: ActionConfig = {
         width: '50px',
         actions: [
@@ -78,7 +78,7 @@ describe('Action', () => {
         actions: [
           // @ts-ignore
           {
-            iconTitle: 'icon1',
+            iconClassList: ['icon1'],
             name: 'action1',
             url: 'url1',
             blank: true,
