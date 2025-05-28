@@ -1,7 +1,6 @@
-import { default as DtHeaders } from '../core/DtHeaders';
-import { default as AbstractLxDom } from './AbstractLxDom';
+import DtHeaders from '../core/DtHeaders';
+import AbstractLxDom from './AbstractLxDom';
 import { LxConfigObject } from '../core/LyxeaDatatable';
-
 export type HeaderLxDomArgs = {
     headers: DtHeaders;
     config: LxConfigObject;

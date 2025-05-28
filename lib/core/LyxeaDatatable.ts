@@ -5,6 +5,7 @@ import 'datatables.net-buttons-dt';
 import 'datatables.net-buttons/js/buttons.colVis.mjs';
 import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-buttons/js/buttons.print.mjs';
+import 'datatables.net-select';
 
 import DataTable, {
   Config,
