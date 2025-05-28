@@ -1,6 +1,5 @@
-import { default as AbstractLxDom } from './AbstractLxDom';
-import { default as DataTable } from 'datatables.net';
-
+import AbstractLxDom from './AbstractLxDom';
+import DataTable from 'datatables.net';
 /**
  * Deprecated
  */

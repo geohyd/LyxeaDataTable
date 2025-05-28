@@ -1,5 +1,4 @@
-import { default as State } from '../utils/State';
-
+import State from '../utils/State';
 export type DaoState<T> = {
     loading: boolean;
     data: Array<T> | null;
