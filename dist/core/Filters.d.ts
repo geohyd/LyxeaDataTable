@@ -1,7 +1,6 @@
 import { LxConfigObject } from './LyxeaDatatable';
-import { default as DataTable } from 'datatables.net-dt';
-import { default as FooterLxDom } from '../dom/FootersLxDom';
-
+import DataTable from 'datatables.net-dt';
+import FooterLxDom from '../dom/FootersLxDom';
 declare class Filters<T> {
     tableRef: HTMLElement | null;
     config: LxConfigObject;

@@ -1,6 +1,5 @@
 import { ConfigColumns } from 'datatables.net-dt';
 import { CustomConfigColumns, LxConfigObject, LxHeaderDef, LxHeadersConfig } from './LyxeaDatatable';
-
 export declare enum HeaderGroup {
     NONE = "NONE"
 }

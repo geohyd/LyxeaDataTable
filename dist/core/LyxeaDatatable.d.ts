@@ -1,12 +1,11 @@
-import { default as DataTable, Config, ConfigColumns } from 'datatables.net-dt';
-import { default as AbstractLyxeaDatatable } from './AbstractLyxeaDatatable';
-import { default as Dao } from '../dao/Dao';
-import { default as Dto } from '../dto/Dto';
+import DataTable, { Config, ConfigColumns } from 'datatables.net-dt';
+import AbstractLyxeaDatatable from './AbstractLyxeaDatatable';
+import Dao from '../dao/Dao';
+import Dto from '../dto/Dto';
 import { ILyxeaDatatable } from 'lib/types/LxDt_interface';
-import { default as Transformers } from '../dto/Transformers';
+import Transformers from '../dto/Transformers';
 import { ActionArgs } from '../plugins/action/Action';
-import { default as Filters } from './Filters';
-
+import Filters from './Filters';
 /**
  * @types
  */
